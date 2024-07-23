@@ -1,0 +1,84 @@
+.Footer {
+  background-color: rgb(255, 255, 255);
+  margin-top: 70px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.FooterFirstSession,
+.FooterSecondSession {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 30px;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.FooterFirstSession .footerList,
+.FooterSecondSession .footerList {
+  padding: 0;
+}
+
+.Footer img {
+  max-width: 100%;
+  height: auto;
+}
+
+.linkWithoutDecoration {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+
+.linkWithoutDecoration:hover {
+  color: red;
+}
+
+.copyRight {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: black;
+  padding: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 992px) {
+  .FooterFirstSession,
+  .FooterSecondSession {
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: center;
+  }
+
+  .FooterFirstSession .footerList,
+  .FooterSecondSession .footerList {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .FooterFirstSession,
+  .FooterSecondSession {
+    flex-direction: column;
+  }
+
+  .Footer img {
+    width: 150px; /* Adjust based on your design needs */
+    height: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .FooterFirstSession,
+  .FooterSecondSession {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .copyRight {
+    padding: 0.5rem;
+  }
+
+  .footerList {
+    font-size: 0.9rem;
+  }
+}
