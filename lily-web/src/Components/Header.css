@@ -1,208 +1,170 @@
 /* src/components/Header.css */
 
-/* Giữ thanh điều hướng cố định ở đầu trang */
-.Hearder-nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000; /* Đảm bảo nó nằm trên các phần tử khác */
-    background-color: #fff; /* Thêm màu nền để phân biệt khỏi các phần bên dưới */
+.Header-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #fff;
 }
 
-/* Đảm bảo nội dung không bị che khuất bởi thanh điều hướng */
 body {
-    padding-top: 100px; /* Chiều cao của header để tạo khoảng cách cho nội dung bên dưới */
-}
-
-.search-bar {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%; /* Chiếm toàn bộ chiều rộng của phần chứa */
-    max-width: 500px; /* Chiều rộng tối đa để giữ kích thước hợp lý trên màn hình lớn */
-    margin: 0 auto; /* Đặt thanh tìm kiếm ở giữa */
-}
-
-.search-bar input {
-    padding: 0.5rem 2rem; /* Padding bên phải để tạo khoảng trống cho biểu tượng */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    width: 100%; /* Chiếm toàn bộ chiều rộng của .search-bar */
-    outline: none; /* Loại bỏ viền khi focus */
-    transition: border-color 0.3s; /* Hiệu ứng chuyển tiếp cho viền khi thay đổi màu sắc */
-    height: 35px;
-    margin-top: 10px;
-    margin-left: -30px;
-}
-
-.search-bar input:focus {
-    border-color: #ccc; /* Màu viền khi ô input được chọn */
-}
-
-.search-icon {
-    position: absolute;
-    right: 10px; /* Cách bên phải 10px */
-    color: #000; /* Màu đen cho biểu tượng */
-    font-size: 1.2rem;
-    margin-top: 10px;
+  padding-top: 100px;
 }
 
 .header {
-    display: flex;
-    width: 100%;
-    height: auto; /* Tự động điều chỉnh chiều cao */
-    flex-wrap: wrap; /* Để các phần trong header có thể xuống dòng nếu cần */
-    box-sizing: border-box; /* Để padding và border không làm tăng kích thước tổng thể */
+  display: flex;
+  flex-wrap: wrap;
+  
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  padding: 0px 20px;
+  box-sizing: border-box;
+  background-color: #ff0000;
 }
 
 .header-section {
-    color: #fff;
-    text-align: center;
-    padding: 1rem;
-    box-sizing: border-box; /* Để padding và border không làm tăng kích thước tổng thể */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.section1 {
-    width: 100%;
-    max-width: 225px; /* Chiều rộng tối đa */
-    background-color: red; /* Màu sắc 1 */
+.section1 .logo {
+  width: 80px;
+  height: auto;
+  margin-left: 40px;
 }
 
-.section2 {
-    width: 100%; /* Đặt width 100% để nó có thể co giãn theo màn hình */
-    max-width: 600px; /* Chiều rộng tối đa */
-    background-color: red; /* Màu sắc 2 */
-    
+.section2 .search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  
+  width: 100%;
 }
-.section3 {
-    flex: 1;
-    background-color: red; /* Màu nền tổng thể */
-    display: flex; /* Hiển thị dưới dạng flex để chia thành cột */
-    justify-content: space-between; /* Căn chỉnh các cột một cách hợp lý */
-    padding: 1rem; /* Khoảng cách bên trong */
+.search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100px; /* Updated width */
+    height: 30px; /* Updated height */
+    margin-left: 40px;
+  }
+  
+  .search-bar input {
+    width: 400px; /* Adjust to account for the icon */
+    height: 100%; /* Ensure it takes full height */
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px; /* Adjust font size if needed */
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    font-size: 1.5rem; /* Adjust icon size if needed */
+    color: #000;
+  }
+  
+.section3{
+    margin-left: 50px;
+}
+.section4{
+    margin-left: 50px; 
+}
+.section3 .column1, .section3 .column2, .section3 .column3 {
+  text-align: center;
+  font-size: 17px;
+  font-weight: bold;
+  padding: 0 5px;
+  margin-left: 20px;
 }
 
-.section3 > div {
-    flex: 1 1 30%; /* Mặc định cột chiếm khoảng 30% chiều rộng của section3 */
-    /* margin: 0 1rem; Khoảng cách giữa các cột */
-    text-align: center;
-    color: #fff; /* Màu chữ cho các cột */
-    padding: 1rem; /* Padding cho các cột */
-    box-sizing: border-box; /* Để padding không làm tăng kích thước tổng thể */
+.section4 .user-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
-/* Đặc biệt cho column1 để rộng thêm 30px */
-.section3 .column1 {
-    flex: 1 1 50%; /* Chiếm khoảng 36% chiều rộng của section3 */
-    background-color:red; /* Màu nền cho cột 1 */
+.user-actions a {
+  font-size: 18px;
 }
 
-.section3 .column2 {
-    background-color:red; /* Màu nền cho cột 2 */
-}
-
-.section3 .column3 {
-    background-color: red; /* Màu nền cho cột 3 */
-}
-
-@media (max-width: 768px) {
-    .section3 {
-        flex-direction: column; /* Để các cột xếp chồng lên nhau trên màn hình nhỏ */
-        padding: 0; /* Loại bỏ khoảng cách bên trong */
-    }
-
-    .section3 > div {
-      
-    }
-}
-.section4 {
-    width: 350px;
-    background-color: red; /* Màu sắc 4 */
+.user-actions .icon {
+  font-size: 22px;
 }
 
 .category {
-    background-color: #f9f9f9;
-    padding: 15px;
-    text-align: center;
+  background-color: #f9f9f9;
+  padding: 10px;
+  text-align: center;
 }
 
 .category ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap; /* Cho phép các mục xuống dòng khi cần */
-}
-
-.category ul li {
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .category ul li a {
-    text-decoration: none;
-    color: #333;
-    
-}
-.category ul li a {
-    text-decoration: none;
-    color: #333; /* Màu chữ mặc định */
-    padding: 0px; /* Thêm khoảng cách bên trong để dễ chạm vào */
-    display: block; /* Đảm bảo rằng padding có hiệu lực */
-    transition: color 0.3s ease, background-color 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+  text-decoration: none;
+  color: #333;
+  padding: 3px 5px;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-/* Thay đổi màu khi người dùng di chuột qua */
 .category ul li a:hover {
-    color: #fd0000; /* Màu chữ khi di chuột qua */
-
+  color: #fd0000;
 }
+
 @media (max-width: 768px) {
-    .search-bar {
-        flex-direction: column;
-        width: 100%; /* Để thanh tìm kiếm chiếm toàn bộ chiều rộng trên màn hình nhỏ */
-        max-width: none; /* Loại bỏ chiều rộng tối đa để thanh tìm kiếm có thể co giãn theo kích thước màn hình */
-    }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .search-bar input {
-        padding-right: 2rem; /* Đảm bảo đủ khoảng trống cho biểu tượng trên màn hình nhỏ */
-    }
+  .header-section {
+    width: 100%;
+    justify-content: center;
+  }
 
-    .search-icon {
-        right: 1rem; /* Điều chỉnh vị trí biểu tượng cho phù hợp với kích thước màn hình nhỏ */
-    }
+  .section2 .search-bar {
+    max-width: 100%;
+    margin: 10px 0;
+  }
 
-    .header {
-        flex-direction: column; /* Đặt các phần trong header theo cột trên màn hình nhỏ */
-    }
+  .section3 .column1, .section3 .column2, .section3 .column3 {
+    text-align: center;
+    font-size: 14px;
+    padding: 5px;
+  }
 
-    .header-section {
-        width: 100%; /* Đảm bảo các phần trong header chiếm toàn bộ chiều rộng trên màn hình nhỏ */
-    }
+  .section3 {
+    flex-direction: column;
+  }
 
-    .section3 {
-        flex-direction: column; /* Để các cột xếp chồng lên nhau trên màn hình nhỏ */
-        padding: 0; /* Loại bỏ khoảng cách bên trong */
-    }
+  .user-actions a {
+    font-size: 16px;
+  }
 
-    .section3 > div {
-      
-    }
+  .user-actions .icon {
+    font-size: 20px;
+  }
 
-    .category ul {
-        flex-direction: column; /* Các mục trong danh mục xếp thành cột trên màn hình nhỏ */
-    }
-
-    .category ul li {
-        margin-bottom: 0.5rem;
-    }
+  .category ul {
+    flex-direction: column;
+    gap: 5px;
+  }
 }
-li{
-    color: black; /* Màu chữ mặc định */
-    transition: color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
-}
-li.tapped {
-    color: red; /* Màu chữ khi chạm */
+.header-section{
+    color: white;
 }

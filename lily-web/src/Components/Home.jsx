@@ -92,7 +92,7 @@ const Home = () => {
     <div class="footer-nav">
   <div  style={{fontWeight:'bold',fontSize:'20px'}} class="footer-section">
   <a>Đăng ký email nhận tin:
-    <a>  <input style={{width:'300px',height:'40px',fontSize:'20px'}} type="email" />
+    <a>  <input style={{width:'300px',height:'40px',fontSize:'20px',padding:'10px'}} type="email" />
      <a> <button style={{width:'50px',height:'44px',backgroundColor:'red'}}> OK</button></a>
     </a>
   </a>
