@@ -141,7 +141,12 @@ const ProductList = () => {
             {row.map((product) => (
               <div key={product.id} className="col-6 col-md-3" style={{ backgroundColor: 'rgb(243 240 240)', margin: '10px', borderRadius: '10px', width: '350px', height: '400px' }}>
                 <Link to={`/product/${product.id}`} className="BestSellimageContainer linkWithoutDecoration" style={{ display: 'block', height: '100%', borderRadius: '10px' }}>
-                  <img style={{ width: '100%', height: '60%', borderRadius: '10px 10px 0 0', objectFit: 'cover' }} src={`http://localhost:8080/Image/${product.image}`} alt={product.name} />
+                <img
+  className="image-click-effect"
+  style={{ width: '100%', height: '60%', borderRadius: '10px 10px 0 0', objectFit: 'cover' }}
+  src={`http://localhost:8080/Image/${product.image}`}
+  alt={product.name}
+/>
                   <div style={{ padding: '10px', width: '100%' }}>
                     <h4>{product.name}</h4>
                     <p style={{ color: 'red' }}>{product.formattedPrice} ₫</p>

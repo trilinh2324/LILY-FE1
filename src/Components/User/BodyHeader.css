@@ -191,3 +191,15 @@ a:hover{
   color: rgb(253, 6, 6);
   text-decoration: none;
 }
+
+
+
+
+.image-effect {
+  transition: transform 1.5s ease;
+}
+
+.image-effect.move {
+  transform: translateY(5px); /* Moves the image down by 5px */
+}
+

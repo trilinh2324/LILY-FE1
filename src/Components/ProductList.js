@@ -1,4 +1,3 @@
-// src/components/ProductList.js
 
 import React, { useState, useEffect } from 'react';
 import ProductService from './ProductService';

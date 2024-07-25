@@ -1,0 +1,16 @@
+.slider {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  height: 600px; /* Chiều cao của slider */
+  overflow: hidden; /* Đảm bảo ảnh không vượt ra ngoài khung */
+}
+
+.slider-image {
+  width: 100%;
+  height: 100%; /* Chiều cao của ảnh để phù hợp với chiều cao của slider */
+  object-fit: cover; /* Giữ tỷ lệ và đảm bảo ảnh lấp đầy khung */
+  object-position: bottom; /* Căn chỉnh ảnh xuống dưới khung chứa */
+  display: block;
+  transition: opacity 0.5s ease-in-out;
+}

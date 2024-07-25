@@ -1,0 +1,208 @@
+/* src/components/Header.css */
+
+/* Giữ thanh điều hướng cố định ở đầu trang */
+.Hearder-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Đảm bảo nó nằm trên các phần tử khác */
+    background-color: #fff; /* Thêm màu nền để phân biệt khỏi các phần bên dưới */
+}
+
+/* Đảm bảo nội dung không bị che khuất bởi thanh điều hướng */
+body {
+    padding-top: 100px; /* Chiều cao của header để tạo khoảng cách cho nội dung bên dưới */
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Chiếm toàn bộ chiều rộng của phần chứa */
+    max-width: 500px; /* Chiều rộng tối đa để giữ kích thước hợp lý trên màn hình lớn */
+    margin: 0 auto; /* Đặt thanh tìm kiếm ở giữa */
+}
+
+.search-bar input {
+    padding: 0.5rem 2rem; /* Padding bên phải để tạo khoảng trống cho biểu tượng */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%; /* Chiếm toàn bộ chiều rộng của .search-bar */
+    outline: none; /* Loại bỏ viền khi focus */
+    transition: border-color 0.3s; /* Hiệu ứng chuyển tiếp cho viền khi thay đổi màu sắc */
+    height: 35px;
+    margin-top: 10px;
+    margin-left: -30px;
+}
+
+.search-bar input:focus {
+    border-color: #ccc; /* Màu viền khi ô input được chọn */
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px; /* Cách bên phải 10px */
+    color: #000; /* Màu đen cho biểu tượng */
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    height: auto; /* Tự động điều chỉnh chiều cao */
+    flex-wrap: wrap; /* Để các phần trong header có thể xuống dòng nếu cần */
+    box-sizing: border-box; /* Để padding và border không làm tăng kích thước tổng thể */
+}
+
+.header-section {
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    box-sizing: border-box; /* Để padding và border không làm tăng kích thước tổng thể */
+}
+
+.section1 {
+    width: 100%;
+    max-width: 225px; /* Chiều rộng tối đa */
+    background-color: red; /* Màu sắc 1 */
+}
+
+.section2 {
+    width: 100%; /* Đặt width 100% để nó có thể co giãn theo màn hình */
+    max-width: 600px; /* Chiều rộng tối đa */
+    background-color: red; /* Màu sắc 2 */
+    
+}
+.section3 {
+    flex: 1;
+    background-color: red; /* Màu nền tổng thể */
+    display: flex; /* Hiển thị dưới dạng flex để chia thành cột */
+    justify-content: space-between; /* Căn chỉnh các cột một cách hợp lý */
+    padding: 1rem; /* Khoảng cách bên trong */
+}
+
+.section3 > div {
+    flex: 1 1 30%; /* Mặc định cột chiếm khoảng 30% chiều rộng của section3 */
+    /* margin: 0 1rem; Khoảng cách giữa các cột */
+    text-align: center;
+    color: #fff; /* Màu chữ cho các cột */
+    padding: 1rem; /* Padding cho các cột */
+    box-sizing: border-box; /* Để padding không làm tăng kích thước tổng thể */
+}
+
+/* Đặc biệt cho column1 để rộng thêm 30px */
+.section3 .column1 {
+    flex: 1 1 50%; /* Chiếm khoảng 36% chiều rộng của section3 */
+    background-color:red; /* Màu nền cho cột 1 */
+}
+
+.section3 .column2 {
+    background-color:red; /* Màu nền cho cột 2 */
+}
+
+.section3 .column3 {
+    background-color: red; /* Màu nền cho cột 3 */
+}
+
+@media (max-width: 768px) {
+    .section3 {
+        flex-direction: column; /* Để các cột xếp chồng lên nhau trên màn hình nhỏ */
+        padding: 0; /* Loại bỏ khoảng cách bên trong */
+    }
+
+    .section3 > div {
+      
+    }
+}
+.section4 {
+    width: 350px;
+    background-color: red; /* Màu sắc 4 */
+}
+
+.category {
+    background-color: #f9f9f9;
+    padding: 15px;
+    text-align: center;
+}
+
+.category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap; /* Cho phép các mục xuống dòng khi cần */
+}
+
+.category ul li {
+    margin: 0;
+}
+
+.category ul li a {
+    text-decoration: none;
+    color: #333;
+    
+}
+.category ul li a {
+    text-decoration: none;
+    color: #333; /* Màu chữ mặc định */
+    padding: 0px; /* Thêm khoảng cách bên trong để dễ chạm vào */
+    display: block; /* Đảm bảo rằng padding có hiệu lực */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
+
+/* Thay đổi màu khi người dùng di chuột qua */
+.category ul li a:hover {
+    color: #fd0000; /* Màu chữ khi di chuột qua */
+
+}
+@media (max-width: 768px) {
+    .search-bar {
+        flex-direction: column;
+        width: 100%; /* Để thanh tìm kiếm chiếm toàn bộ chiều rộng trên màn hình nhỏ */
+        max-width: none; /* Loại bỏ chiều rộng tối đa để thanh tìm kiếm có thể co giãn theo kích thước màn hình */
+    }
+
+    .search-bar input {
+        padding-right: 2rem; /* Đảm bảo đủ khoảng trống cho biểu tượng trên màn hình nhỏ */
+    }
+
+    .search-icon {
+        right: 1rem; /* Điều chỉnh vị trí biểu tượng cho phù hợp với kích thước màn hình nhỏ */
+    }
+
+    .header {
+        flex-direction: column; /* Đặt các phần trong header theo cột trên màn hình nhỏ */
+    }
+
+    .header-section {
+        width: 100%; /* Đảm bảo các phần trong header chiếm toàn bộ chiều rộng trên màn hình nhỏ */
+    }
+
+    .section3 {
+        flex-direction: column; /* Để các cột xếp chồng lên nhau trên màn hình nhỏ */
+        padding: 0; /* Loại bỏ khoảng cách bên trong */
+    }
+
+    .section3 > div {
+      
+    }
+
+    .category ul {
+        flex-direction: column; /* Các mục trong danh mục xếp thành cột trên màn hình nhỏ */
+    }
+
+    .category ul li {
+        margin-bottom: 0.5rem;
+    }
+}
+li{
+    color: black; /* Màu chữ mặc định */
+    transition: color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+}
+li.tapped {
+    color: red; /* Màu chữ khi chạm */
+}
