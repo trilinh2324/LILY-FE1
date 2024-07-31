@@ -1,106 +1,88 @@
-
 import React from 'react';
 import './Home.css';
 import ImageSlider from '../Components/ImageSlider';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookSquare, faInstagram, faPinterest,  } from '@fortawesome/free-brands-svg-icons';
+import zaloIcon from '../Components/Image/iconzalo.png';
+import youtubeIcon from '../Components/Image/iconyoutube.png';
+import TwitterIcon from '../Components/Image/icontwitter.png';
+import intagramIcon from '../Components/Image/iconinstagram.png';
+import pinterestIcon from '../Components/Image/iconpinterest.png';
+import facebookIcon from '../Components/Image/iconfacebook.png';
+import Header from '../Components/Header';
+import Footer from '../Components/Footer';
+import ProductList  from './Product/ProductList';
 const Home = () => {
   return (
     <div>
-       <ImageSlider />
-    
-    <main className="home">
-       
-      <section className="hero">
-        <h1>Welcome to MySite</h1>
-        <p>Your journey starts here.</p>
-      
-      </section>
-      <section className="features">
-        <div className="feature">
-          <h2>Feature 1</h2>
-          <p>Description of Feature 1</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 2</h2>
-          <p>Description of Feature 2</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 3</h2>
-          <p>Description of Feature 3</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 3</h2>
-          <p>Description of Feature 3</p>
-        </div>
-      </section>
-      <section className="features">
-        <div className="feature">
-          <h2>Feature 1</h2>
-          <p>Description of Feature 1</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 2</h2>
-          <p>Description of Feature 2</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 3</h2>
-          <p>Description of Feature 3</p>
-        </div>
-      </section>
-      <section className="features">
-        <div className="feature">
-          <h2>Feature 1</h2>
-          <p>Description of Feature 1</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 2</h2>
-          <p>Description of Feature 2</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 3</h2>
-          <p>Description of Feature 3</p>
-        </div>
-      </section>
-      <section className="features">
-        <div className="feature">
-          <h2>Feature 1</h2>
-          <p>Description of Feature 1</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 2</h2>
-          <p>Description of Feature 2</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 3</h2>
-          <p>Description of Feature 3</p>
-        </div>
-      </section>
-      <section className="features">
-        <div className="feature">
-          <h2>Feature 1</h2>
-          <p>Description of Feature 1</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 2</h2>
-          <p>Description of Feature 2</p>
-        </div>
-        <div className="feature">
-          <h2>Feature 3</h2>
-          <p>Description of Feature 3</p>
-        </div>
-      </section>
-    </main>
-    <div class="footer-nav">
-  <div  style={{fontWeight:'bold',fontSize:'20px'}} class="footer-section">
-  <a>Đăng ký email nhận tin:
-    <a>  <input style={{width:'300px',height:'40px',fontSize:'20px',padding:'10px'}} type="email" />
-     <a> <button style={{width:'50px',height:'44px',backgroundColor:'red'}}> OK</button></a>
-    </a>
-  </a>
-  </div>
-  <div class="footer-section">Section 2</div>
-</div>
-
+       <Header />
+      <ImageSlider />
+      <main className="home">
+        <section className="hero">
+          <h2>SẢN PHẨM MỚI</h2>
+          <ProductList />
+        </section>
+        <section className="hero">
+          <h2>NHẪN NAM ĐẸP</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>DÂY CHUYỀN VÀNG</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>MẶT DÂY VÀNG ĐÁ QUÝ</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>DÂY CHUYỀN NỮ</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>MẶT DÂY CHUYỀN CHỮ VÀNG</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>HOA TAI VÀNG ĐÁ QUÝ</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>KIỀNG VÀNG</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>VÒNG TAY VÀNG TÂY</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>TRANG SỨC BỘ</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>LẮC CHÂN VÀNG</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>LẮC VÀNG TÂY ĐÁ QUÝ</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>NGỌC CẨM THẠCH</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>RUBY</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        <section className="hero">
+          <h2>KIM CƯƠNG</h2>
+          <p>Your journey starts here.</p>
+        </section>
+        
+      </main>
+      <Footer />
     </div>
+    
   );
 };
 

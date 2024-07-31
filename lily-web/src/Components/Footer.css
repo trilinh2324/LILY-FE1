@@ -1,6 +1,6 @@
 .footer {
   background-color: white;
-  padding: 20px;
+ 
   font-family: Arial, sans-serif;
 }
 
@@ -10,7 +10,7 @@
   margin-bottom: 10px;
   margin-left: 60px;
   margin-right: 50px;
-  font-size: 18px;
+font-size: 14px;
   background-color: white;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .footer-column h2 {
-  font-size: 18px;
+  
   margin-bottom: 10px;
 }
 
@@ -64,6 +64,9 @@
 }
 
 .footer-bottom-info.day {
-  font-size: 14px;
+ 
   color: #ffffff;
+}
+P{
+  font-size: 14PX;
 }

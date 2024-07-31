@@ -1,0 +1,165 @@
+/* ProductDetail.css */
+
+.product-detail-container {
+    padding: 20px;
+}
+
+.breadcrumb {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.breadcrumb li {
+    margin-right: 5px;
+}
+
+.breadcrumb li + li::before {
+    content: ">";
+    margin-left: 2px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+
+.breadcrumb a {
+    color: black;
+    text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+.product-main-info {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.product-image {
+    width: 600px;
+    height: 500px;
+    margin-right: 50px;
+}
+
+.product-info {
+    flex: 1;
+   
+}
+p{
+    font-size: 18px;
+}
+.product-details1 {
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+
+.counter {
+    display: flex;
+    align-items: center;
+  }
+  
+  .counter-number {
+    margin: 0 10px;
+
+    text-align: center;
+  }
+
+
+
+.purchase-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Khoảng cách giữa các nút */
+    margin-top: 20px; /* Khoảng cách trên cùng của khu vực nút */
+    margin-right: 130px;
+  }
+  
+  .purchase-button {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    width: 250PX;
+    height: 70px;
+  }
+  
+  .purchase-button:hover {
+    background-color: darkred; /* Màu khi hover */
+  }
+  
+  
+
+
+
+/* Container để căn giữa nội dung */
+.social-share-container {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+ 
+    gap: 10px; /* Khoảng cách giữa văn bản và các biểu tượng */
+    margin: 20px 0; /* Khoảng cách trên và dưới container */
+  }
+  
+  /* Định kiểu cho văn bản */
+  .social-share-text {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  /* Định kiểu cho các biểu tượng */
+  .social-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa các biểu tượng */
+  }
+  
+  .social-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px; /* Kích thước biểu tượng */
+    height: 45px; /* Kích thước biểu tượng */
+    border-radius: 50%; /* Đảm bảo biểu tượng có hình dạng tròn */
+    overflow: hidden; /* Ẩn các phần tử ngoài vùng tròn */
+  }
+  
+  .social-icons img {
+    width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ kích thước của thẻ chứa */
+    height: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ kích thước của thẻ chứa */
+  }
+  
+
+
+  .custom-hr {
+    border: none; /* Loại bỏ đường viền mặc định */
+    border-top: 1px solid #a8a8a8; /* Thay đổi màu và độ dày của đường gạch ngang */
+    margin: 20px 0; /* Khoảng cách trên và dưới đường gạch ngang */
+   width: 93%;
+  margin-left: 50px;
+  }
+
+
+
+.product-details-container {
+    display: flex; /* Sử dụng flexbox để chia cột */
+  }
+  
+  .product-details1 {
+    flex: 7; /* Cột đầu tiên chiếm 70% */
+    padding: 10px; /* Thêm khoảng cách bên trong cột */
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng cộng */
+  }
+  
+  .product-details2 {
+    flex: 3; /* Cột thứ hai chiếm 30% */
+    padding: 10px; /* Thêm khoảng cách bên trong cột */
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng cộng */
+  }

@@ -1,20 +1,15 @@
-// src/App.js
 import React from 'react';
-import Header from './Components/Header';
-import Footer from './Components/Footer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
-
-
+import ProductDetail from './Components/Product/ProductDetail';
 const App = () => {
   return (
-    <div className="app">
-      <Header />
-    
-      <Home />
-
-
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+      </Routes>
+    </Router>
   );
 };
 
