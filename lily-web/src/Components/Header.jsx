@@ -5,18 +5,19 @@ import './Header.css';
 import logo1 from './Image/logo/logo2.png';
 import { BsPersonFill } from 'react-icons/bs';
 import { FaCartShopping } from 'react-icons/fa6';
-
+import { useParams, Link } from 'react-router-dom';
 const Header = () => {
   return (
     <>
       <div className='Header-nav'>
         <header className="header">
           <div className="header-section section1">
-            <img
-              src={logo1}
-              alt="Logo"
-              className="logo"
-            />
+            
+          <Link to="/">
+        <img src={logo1} alt="Logo" className="logo" />
+      </Link>
+            
+           
           </div>
           <div className="header-section section2">
             <div  className="search-bar">
@@ -40,8 +41,8 @@ const Header = () => {
           </div>
           <div className="header-section section4">
             <div className="user-actions">
-              <a className="icon"><BsPersonFill /></a>  <a> Đăng nhập</a>
-              <a className="icon"><FaCartShopping /></a>  <a>Giỏ hàng</a>
+              <a style={{color:'white'}} className="icon"><BsPersonFill /></a>  <a> Đăng nhập</a>
+              <a  style={{color:'white'}} className="icon"><FaCartShopping /></a>  <a>Giỏ hàng</a>
             </div>
           </div>
         </header>

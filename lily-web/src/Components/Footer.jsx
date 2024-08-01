@@ -18,12 +18,12 @@ const Footer = () => {
   return (
     <div>
        <div className="footer-nav">
-        <div className="footer-section" style={{ fontWeight: 'bold', fontSize: '17px' }}>
+        <div className="footer-section" style={{ fontWeight: 'bold', fontSize: '15px' }}>
           Đăng ký email nhận tin : 
           <input style={{ width: '230px', height: '16px', fontSize: '13px', padding: '17px' }} type="email" />
           <button style={{ width: '45px', height: '38px', backgroundColor: 'red', color: 'white',marginLeft:'3px' }}>OK</button>
         </div>
-        <div className="footer-section">
+        <div className="footer-section"  style={{marginRight:'150px'}}>
           <span>Kết nối với chúng tôi: </span>
           <a style={{paddingTop:'5px',marginRight:'5px'}} target="_blank" rel="noreferrer" href="https://www.facebook.com/trangsucemvatoi.vn">
           <img src={facebookIcon} alt="facebook" style={{ width: '40px', height: '40px' }} />
@@ -45,12 +45,13 @@ const Footer = () => {
             <img src={zaloIcon} alt="Zalo" style={{ width: '40px', height: '40px' }} />
           </a>
         </div>
-     
     </div>
+    <br/>
+    <br/>
     <footer className="footer">
       <div className="footer-top">
         <div className="footer-column">
-          <h3>VỀ CHÚNG TÔI</h3>
+          <p>VỀ CHÚNG TÔI</p>
           <ul>
             <li>Giới Thiệu</li>
             <li>Chính sách bảo mật thông tin</li>
@@ -61,7 +62,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer-column">
-          <h3>DỊCH VỤ KHÁCH HÀNG</h3>
+          <p>DỊCH VỤ KHÁCH HÀNG</p>
           <ul>
             <li>Chính sách và Dịch vụ bảo hành</li>
             <li>Thanh Toán</li>
@@ -72,7 +73,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer-column">
-          <h3>THÔNG TIN HỮU ÍCH</h3>
+          <p>THÔNG TIN HỮU ÍCH</p>
           <ul>
             <li>Thiết kế nhẫn cưới</li>
             <li>Bảo quản trang sức</li>
@@ -82,7 +83,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer-column">
-          <h3>TIN TỨC VÀ SỰ KIỆN</h3>
+          <p>TIN TỨC VÀ SỰ KIỆN</p>
           <ul>
             <li>Vàng trắng là gì?</li>
             <li>Các thiết bị giám định</li>
@@ -94,13 +95,13 @@ const Footer = () => {
       </div>
       <div className="footer-bottom">
   <div style={{marginLeft:'50px'}} className="footer-contact">
-    <h1>LILY JEWELERY ®</h1>
-    <p>"Trao trọn niềm tin - Đồng hành cùng bạn"</p>
-    <p >Địa chỉ Showroom:<a style={{fontWeight:'bold',fontSize:'15px'}}>Thôn 4, Quảng Hòa, Quảng xương, Thanh Hóa, Việt Nam</a>  | <a href="https://www.google.com/maps/place/S%C3%A2n+v%E1%BA%ADn+%C4%91%E1%BB%99ng+x%C3%A3+Qu%E1%BA%A3ng+Ho%C3%A0/@19.7106025,105.7506255,17.8z/data=!4m15!1m8!3m7!1s0x3136ff31b9211fb1:0xdf1e50c5bb71a5b3!2zUXXhuqNuZyBIb8OgLCBRdeG6o25nIFjGsMahbmcsIFRoYW5oIEhvw6E!3b1!8m2!3d19.7134326!4d105.7527221!16s%2Fg%2F1232jsfn!3m5!1s0x3136ff61d7c16b63:0xbeca38b3809832ef!8m2!3d19.709983!4d105.7522957!16s%2Fg%2F11trsyh1p5?entry=ttu" target="_blank" rel="noopener noreferrer">Chỉ đường</a></p>
-    <p>CÔNG TY TNHH TRANG SỨC LILY ®<br/>
-    Văn Phòng:<a style={{fontWeight:'bold',fontSize:'15px'}}>Quảng Hòa, Quảng xương, Thanh Hóa, Việt Nam</a><br/>
-    Tel: 0339806596 | Hotline: 0866093674</p>
-    Email: <a href="mailto:emvatoi@trangsucvn.com">trilinh213k4@gmail.com</a>
+    <h3>LILY JEWELERY ®</h3>
+    <a>"Trao trọn niềm tin - Đồng hành cùng bạn"</a>
+    <p style={{fontSize:'14px'}}>Địa chỉ Showroom:<a style={{fontWeight:'bold',fontSize:'14px'}}>Thôn 4, Quảng Hòa, Quảng xương, Thanh Hóa, Việt Nam</a>  | <a href="https://www.google.com/maps/place/S%C3%A2n+v%E1%BA%ADn+%C4%91%E1%BB%99ng+x%C3%A3+Qu%E1%BA%A3ng+Ho%C3%A0/@19.7106025,105.7506255,17.8z/data=!4m15!1m8!3m7!1s0x3136ff31b9211fb1:0xdf1e50c5bb71a5b3!2zUXXhuqNuZyBIb8OgLCBRdeG6o25nIFjGsMahbmcsIFRoYW5oIEhvw6E!3b1!8m2!3d19.7134326!4d105.7527221!16s%2Fg%2F1232jsfn!3m5!1s0x3136ff61d7c16b63:0xbeca38b3809832ef!8m2!3d19.709983!4d105.7522957!16s%2Fg%2F11trsyh1p5?entry=ttu" target="_blank" rel="noopener noreferrer">Chỉ đường</a></p>
+    <a style={{fontWeight:'bold',fontSize:'14px'}}>CÔNG TY TNHH TRANG SỨC LILY ®</a><br/>
+   <a style={{fontSize:'14px'}}>Văn Phòng:<a>Quảng Hòa, Quảng xương, Thanh Hóa, Việt Nam</a><br/>
+    Tel: 0339806596 | Hotline: 0866093674</a><br/>
+   <a style={{fontSize:'14px'}}> Email: <a href="mailto:emvatoi@trangsucvn.com">trilinh213k4@gmail.com</a></a>
    
   </div>
   <div className="footer-info">
@@ -127,22 +128,22 @@ const Footer = () => {
     <div> <img
                   src={logo3}
                   alt="Logo"
-                  style={{ width: '100px', height: '100px', paddingLeft: '40px', paddingTop: '0px' }}
+                  style={{ width: '130px', height: '100px', paddingLeft: '40px', paddingTop: '0px' }}
                 
                 /> <a style={{color:'red'}}>  <br/> Trao trọn niềm tin - Đồng hành cùng bạn </a> </div>
   
     
-    <p>Thời gian mở cửa: 08:00 - 20:00 (T2-CN, Kể cả ngày Lễ)<br/>
+    <a style={{fontSize:'14px'}}>Thời gian mở cửa: 08:00 - 20:00 (T2-CN, Kể cả ngày Lễ)<br/>
     Gọi mua hàng:<a  style={{fontSize:'22px',fontWeight:'bold'}}>0339806596 | 0866093674</a> <br/>
-    Gọi Góp ý: 0339806596</p>
-    <p >Email Kinh Doanh: <a href="mailto:info@trangsucvn.com">trilinh213k4@gmail.com</a></p>
+    Gọi Góp ý: 0339806596</a> <br/>
+    <a style={{fontSize:'14px'}}>Email Kinh Doanh: <a href="mailto:info@trangsucvn.com">trilinh213k4@gmail.com</a></a>
     {/* Add more content as needed */}
   </div>
 </div>
 <div className="cuoi">
   
-    <p>© 2024 LILYJEWELERY\.COM Copyright, All Rights Reserved.</p>
-    <p>CÔNG TY TNHH TRANG LILY ® GPDKKD số: 2103020046. Nơi cấp: Sở Kế Hoạch & Đầu Tư TP. Hà Nội-Việt Nam. Chịu trách nhiệm: Ông Lê Trí Linh</p>
+    <a style={{fontSize:'13px'}}>© 2024 LILYJEWELERY\.COM Copyright, All Rights Reserved.</a><br/>
+    <a style={{fontSize:'13px'}}>CÔNG TY TNHH TRANG LILY ® GPDKKD số: 2103020046. Nơi cấp: Sở Kế Hoạch & Đầu Tư TP. Hà Nội-Việt Nam. Chịu trách nhiệm: Ông Lê Trí Linh</a>
 </div>
 
     </footer>

@@ -53,8 +53,8 @@ body {
   }
   
   .search-bar input {
-    width: 400px; /* Adjust to account for the icon */
-    height: 100%; /* Ensure it takes full height */
+    width: 420px; /* Adjust to account for the icon */
+    height: 45px; /* Ensure it takes full height */
     padding: 0.5rem 1.5rem;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -169,3 +169,4 @@ body {
 .header-section{
     color: white;
 }
+

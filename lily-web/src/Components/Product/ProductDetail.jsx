@@ -41,6 +41,7 @@ const ProductDetail = () => {
     <div>
       <Header />
       <div className="product-detail-container">
+       
         <ul className="breadcrumb">
           <li><Link to="/">Trang chủ</Link></li>
           <li><Link to={`/category/${product.category.id}`}>{product.category.name}</Link></li>
@@ -55,7 +56,7 @@ const ProductDetail = () => {
             <p>Phù hợp với: {product.fate}</p>
             <p>
               <div className="counter">
-              <a>Số lượng :  <button onClick={decrement} className="counter-button">-</button>
+              <a>Số lượng :   <button onClick={decrement} className="counter-button">-</button>
                 <span className="counter-number">{count}</span>
                 <button onClick={increment} className="counter-button">+</button> </a>
                 <a style={{marginLeft:'10px'}}>  Tổng cộng: 
@@ -101,18 +102,18 @@ const ProductDetail = () => {
     <p>{product.description}</p>
     <p>Loại sản phẩm: <Link style={{ color: '#000dc4', textDecoration: 'none' }} to={`/category/${product.category.id}`}>{product.category.name}</Link></p>
     {product.productDetail.goldType && <p>Loại vàng: {product.productDetail.goldType}</p>}
-    {product.productDetail.goldPurity && <p>Độ tinh khiết của vàng: {product.productDetail.goldPurity}</p>}
-    {product.productDetail.goldWeight && <p>Trọng lượng vàng: {product.productDetail.goldWeight}</p>}
+    {product.productDetail.goldPurity && <p>Độ tinh khiết của vàng: {product.productDetail.goldPurity} %</p>}
+    {product.productDetail.goldWeight && <p>Trọng lượng vàng: {product.productDetail.goldWeight} Chỉ</p>}
     {product.productDetail.goldColor && <p>Màu sắc vàng: {product.productDetail.goldColor}</p>}
     {product.productDetail.stoneType && <p>Loại đá chủ: {product.productDetail.stoneType}</p>}
-    {product.productDetail.stoneQuantity && <p>Số lượng đá chủ: {product.productDetail.stoneQuantity}</p>}
-    {product.productDetail.stoneWeight && <p>Trọng lượng đá chủ: {product.productDetail.stoneWeight}</p>}
+    {product.productDetail.stoneQuantity && <p>Số lượng đá : {product.productDetail.stoneQuantity} Viên</p>}
+    {product.productDetail.stoneWeight && <p>Trọng lượng đá : {product.productDetail.stoneWeight} carat</p>}
     {product.productDetail.stoneColor && <p>Màu sắc đá chủ: {product.productDetail.stoneColor}</p>}
     {product.productDetail.stoneShape && <p>Hình dạng đá chủ: {product.productDetail.stoneShape}</p>}
     {product.productDetail.stoneClarity && <p>Độ tinh khiết của đá chủ: {product.productDetail.stoneClarity}</p>}
-    {product.productDetail.pendantLength && <p>Chiều dài: {product.productDetail.pendantLength}</p>}
-    {product.productDetail.pendantWidth && <p>Chiều rộng: {product.productDetail.pendantWidth}</p>}
-    {product.productDetail.pendantHeight && <p>Chiều cao: {product.productDetail.pendantHeight}</p>}
+    {product.productDetail.pendantLength && <p>Chiều dài: {product.productDetail.pendantLength} mm</p>}
+    {product.productDetail.pendantWidth && <p>Chiều rộng: {product.productDetail.pendantWidth} mm</p>}
+    {product.productDetail.pendantHeight && <p>Chiều cao: {product.productDetail.pendantHeight} mm</p>}
     {product.productDetail.warrantyPeriod && <p>Thời gian bảo hành: {product.productDetail.warrantyPeriod}</p>}
     {product.productDetail.origin && <p>Xuất xứ: {product.productDetail.origin}</p>}
     {product.productDetail.buybackOption !== undefined && <p>Có thu mua lại: {product.productDetail.buybackOption ? 'Có' : 'Không'}</p>}
@@ -121,15 +122,29 @@ const ProductDetail = () => {
   <p>Giá sản phẩm thay đổi theo trọng lượng. Vui lòng liên hệ hotline để được tư vấn.</p>
   </div>
   <div className="product-details2">
-  <table class="table">
+  <div  style={{backgroundColor:'#d4d0d0' , padding:'10px'}} className='tableTop' >
+       <a>bạn cần gọi TƯ VẤN ?</a> <br/>
+            <input style={{width:'300px',padding:'7px'}} type="text" id="name" name="name" placeholder='Tên của anh/chị'/><br/>
+            <input style={{marginTop:'5px',width:'300px',padding:'7px'}} type="text" id="phone" name="phone" placeholder='Nhập số điện thoại của anh/chị' /><br/>
+            <button style={{marginTop:'5px',width:'300px',height:'60px',backgroundColor:'red'}} type="submit">
+             <a style={{color:'white'}}>HÃY GỌI LẠI CHO TÔI!!!</a><br/>
+            <a style={{color:'white'}}> Tôi đang rất quan tâm sản phẩm này</a>
+              </button>
+</div>
+
+<div>
+<div>
+  <table style={{borderLeft:' 1px solid #4CAF50',borderRight:'1px solid #4CAF50'}} class="table">
   <thead>
     <tr>
       <th scope="col">Thông Số</th>
-   
+   <td></td>
+   <td></td>
     </tr>
   </thead>
   <tbody>
     <tr>
+      
       <td>Loại sản phẩm</td>
       <td>{product.category.name}</td>
     </tr>
@@ -167,10 +182,21 @@ const ProductDetail = () => {
     </tr>
     <tr>
       <td >Phạm vi bán</td>
-      <td> Giao hàng toàn quốc</td>
+      <td style={{ letterSpacing:' 1px'}}>Giao hàng toàn quốc</td>
     </tr>
   </tbody>
 </table>
+</div>
+  </div><br/>
+
+  <div>
+    <div style={{backgroundColor:'#d4d0d0' , padding:'10px',width:'320px'}}>
+      <a  >Sản phẩm liên quan</a>
+    </div>
+    <div></div>
+  </div>
+
+
   </div>
 </div>
 
