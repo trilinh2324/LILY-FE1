@@ -1,0 +1,78 @@
+.form-con {
+    width: 100%;
+    height: auto;
+  }
+  
+  .form-top {
+    width: 100%;
+    height: auto;
+    background-color: #ececec;
+    padding-top: 70px;
+  }
+  
+  .form-top1 {
+    color: #000;
+    font-size: 16px;
+    width: auto;
+    height: 60px;
+  }
+  
+  .form-nav {
+    width: 60%;
+    height: auto;
+    background-color: white;
+    margin: auto;
+  }
+  
+  .form-footer {
+    padding-top: 20px;
+    font-size: 12px;
+    text-align: center;
+    padding-bottom: 40px;
+    color: #9e9a9a;
+  }
+  
+  .form-header {
+    width: 100%;
+    height: auto;
+  }
+  
+  .custom-hr {
+    border: none;
+    border-top: 1px solid #dfdddd;
+    margin: 20px 0;
+    width: 90%;
+    margin: auto;
+  }
+  
+  .custom-hr1 {
+    border: none;
+    border-top: 2px solid #8b8787;
+    margin: 20px 0;
+    width: 100%;
+    margin: auto;
+  }
+  
+  .formButton {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 20px;
+    width: 190px;
+  }
+  
+  button {
+    background-color: red;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: darkred;
+  }
+  
+  .from-home{
+   padding-left: 50px;
+  }
+  

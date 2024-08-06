@@ -1,0 +1,145 @@
+.form-register {
+    width: 100%;
+    height: auto;
+  }
+  
+  .form-register1 {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    padding-top: 90px;
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding-bottom: 40px;
+  }
+  
+  .register-form-container {
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border: 2px solid #afadad;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 600px;
+  }
+  
+  .register-form-container h4 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .error-message {
+    color: red;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .form-group1 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .form-group1 label {
+    margin-right: 10px;
+    width: 180px; /* Điều chỉnh độ rộng của label theo ý muốn */
+  }
+  .form-group3 label {
+    
+ padding-top: 20px;
+ padding-bottom: 20px;
+  }
+  .form-group3 {
+    margin-left: 100px;
+  }
+  .form-group1 input[type="text"],
+  .form-group1 input[type="email"],
+  .form-group1 input[type="password"] {
+    width: 400px;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  .form-group1 input[type="text"] {
+ 
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  .captcha-group1 input[type="text"] {
+    width: 80px; 
+    padding: 8px;
+    box-sizing: border-box;
+    margin-left: 90px;
+  }
+  
+  .captcha-code {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 8px;
+    background-color: #ececec;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .captcha-code:hover {
+    background-color: #ddd;
+  }
+  
+  .form-group1 input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .form-group1 label a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .form-group1 label a:hover {
+    text-decoration: underline;
+  }
+  
+  button3 {
+    width: 80px;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 230px;
+  }
+  
+  button:hover {
+    background-color: darkred;
+  }
+  
+  .form-links {
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  .form-links a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .form-links a:hover {
+    text-decoration: underline;
+  }
+  
+  .custom-hr1 {
+    border: none;
+    border-top: 2px solid #7e7c7c;
+    margin: 20px 0;
+    width: 100%;
+    margin: auto;
+  }
+  
+
+
+  .hint {
+    margin-left: 180px;
+    display: block;
+    margin-top: 5px;
+    font-size: 0.875rem; /* Kích thước chữ nhỏ hơn */
+    color: #6c757d; /* Màu sắc chữ */
+  }

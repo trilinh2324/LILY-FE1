@@ -19,63 +19,63 @@ const Home = () => {
       <ImageSlider />
       <main className="home">
         <section className="hero">
-          <h2>SẢN PHẨM MỚI</h2>
+          <h4>SẢN PHẨM MỚI</h4>
           <ProductList />
         </section>
         <section className="hero">
-          <h2>NHẪN NAM ĐẸP</h2>
+          <h4>NHẪN NAM ĐẸP</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>DÂY CHUYỀN VÀNG</h2>
+          <h4>DÂY CHUYỀN VÀNG</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>MẶT DÂY VÀNG ĐÁ QUÝ</h2>
+          <h4>MẶT DÂY VÀNG ĐÁ QUÝ</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>DÂY CHUYỀN NỮ</h2>
+          <h4>DÂY CHUYỀN NỮ</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>MẶT DÂY CHUYỀN CHỮ VÀNG</h2>
+          <h4>MẶT DÂY CHUYỀN CHỮ VÀNG</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>HOA TAI VÀNG ĐÁ QUÝ</h2>
+          <h4>HOA TAI VÀNG ĐÁ QUÝ</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>KIỀNG VÀNG</h2>
+          <h4>KIỀNG VÀNG</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>VÒNG TAY VÀNG TÂY</h2>
+          <h4>VÒNG TAY VÀNG TÂY</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>TRANG SỨC BỘ</h2>
+          <h4>TRANG SỨC BỘ</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>LẮC CHÂN VÀNG</h2>
+          <h4>LẮC CHÂN VÀNG</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>LẮC VÀNG TÂY ĐÁ QUÝ</h2>
+          <h4>LẮC VÀNG TÂY ĐÁ QUÝ</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>NGỌC CẨM THẠCH</h2>
+          <h4>NGỌC CẨM THẠCH</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>RUBY</h2>
+          <h4>RUBY</h4>
           <p>Your journey starts here.</p>
         </section>
         <section className="hero">
-          <h2>KIM CƯƠNG</h2>
+          <h4>KIM CƯƠNG</h4>
           <p>Your journey starts here.</p>
         </section>
         

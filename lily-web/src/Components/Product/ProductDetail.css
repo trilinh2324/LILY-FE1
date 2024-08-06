@@ -36,12 +36,14 @@
     align-items: flex-start;
     margin-bottom: 20px;
     justify-content: center;
+    
 }
 
 .product-image {
-    width: 600px;
+    width: 700px;
     height: 500px;
-    margin-right: 50px;
+    margin-right: 100px;
+    margin-left: 200px;
 }
 
 .product-info {
@@ -60,19 +62,28 @@ p{
 .counter {
     display: flex;
     align-items: center;
+    
   }
   
   .counter-number {
     margin: 0 10px;
-
     text-align: center;
   }
   .counter-button{
     width: 30px;
     height: 35px;
+   
   }
 
-
+  .purchase-link {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .purchase-link .small-text {
+    font-size: 12px;
+  }
+  
 
 .purchase-buttons {
     display: flex;
@@ -80,6 +91,7 @@ p{
     gap: 10px; /* Khoảng cách giữa các nút */
     margin-top: 20px; /* Khoảng cách trên cùng của khu vực nút */
     margin-right: 130px;
+
   }
   
   .purchase-button {
