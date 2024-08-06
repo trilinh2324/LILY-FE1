@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './login.css';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import './login.css'; // Đảm bảo bạn đã tạo và liên kết file CSS này
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
 
@@ -33,29 +34,53 @@ const generateCaptchaWithColors = () => {
 const Login = () => {
   const [captcha, setCaptcha] = useState(generateCaptchaWithColors());
   const [captchaInput, setCaptchaInput] = useState('');
-  const [username, setUsername] = useState('');
+  const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleCaptchaRefresh = () => {
     setCaptcha(generateCaptchaWithColors());
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const captchaString = captcha.map(item => item.char).join('');
     
     if (captchaInput !== captchaString) {
       setError('Mã xác nhận không đúng. Vui lòng thử lại.');
       handleCaptchaRefresh();
-    } else if (username !== 'expectedUsername' || password !== 'expectedPassword') { // Thay 'expectedUsername' và 'expectedPassword' bằng thông tin xác thực thực tế của bạn
-      setError('Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại.');
-    } else {
-      // Xử lý đăng nhập thành công tại đây
-      setError(''); // Xóa thông báo lỗi nếu đăng nhập thành công
+      return;
+    }
+  
+    try {
+      const response = await axios.post('http://localhost:8090/api/user/login', {
+        userName: userName,
+        password: password
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+  
+      if (response.status === 200) {
+        setMessage(response.data.message); // Thông báo thành công
+        setError('');
+        localStorage.setItem('username', userName); // Lưu tên người dùng vào localStorage
+        navigate('/'); // Chuyển hướng đến trang chủ khi đăng nhập thành công
+      }
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message || 'Đã xảy ra lỗi. Vui lòng thử lại.');
+      } else {
+        console.error('Error:', error);
+        setError('Đã xảy ra lỗi. Vui lòng thử lại.');
+      }
+      setMessage(''); // Xóa thông báo thành công nếu có lỗi
     }
   };
-
+  
   return (
     <div className='form-login'>
       <Header />
@@ -64,13 +89,14 @@ const Login = () => {
           <h2>Đăng nhập thành viên</h2>
           <form onSubmit={handleSubmit}>
             {error && <div className='error-message'>{error}</div>}
+            {message && !error && <div className='success-message'>{message}</div>}
             <div className='form-group'>
               <label htmlFor='username'>Tài Khoản(*):</label>
               <input
                 type='text'
-                id='username'
-                name='username'
-                value={username}
+                id='userName'
+                name='userName'
+                value={userName}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
@@ -103,9 +129,11 @@ const Login = () => {
             </div>
             <div className='form-group form-remember' style={{ marginLeft: '25%' }}>
               <input type='checkbox' id='remember' name='remember' />
-              <label htmlFor='remember'> Remember my login information</label>
+              <label htmlFor='remember'>Ghi nhớ thông tin đăng nhập của tôi</label>
             </div>
-            <button type='submit'>Đăng nhập</button>
+            <div className='buton-login'>
+              <button type='submit'>Đăng nhập</button>
+            </div>
           </form>
           <div className='form-links'>
             <Link to='/forgot-password'>Bạn đã quên mật khẩu?</Link>

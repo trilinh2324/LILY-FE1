@@ -19,7 +19,7 @@ const ProductList = () => {
       {displayedProducts.map((product) => (
         <div key={product.id} style={{ margin: '10px' }}>
           <Link to={`/product/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <img style={{ width: '300px', height: '250px' }} src={`http://localhost:8080/Image/${product.image}`} alt={product.name} />
+            <img style={{ width: '300px', height: '250px' }} src={`http://localhost:8090/Image/${product.image}`} alt={product.name} />
             <p >{product.name}</p>
             <a>Mã số: {product.code}</a><br/>
             <a style={{ fontWeight: 'bold', fontSize: '16px' }}>Giá: {product.formattedPrice}₫</a>

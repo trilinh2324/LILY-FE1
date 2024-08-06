@@ -11,8 +11,10 @@ import twitterIcon from '../Image/icon-tron/icontwitte1.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProductDetail = () => {
+  
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [count, setCount] = useState(1);
 
   useEffect(() => {
     ProductService.getProductById(id).then((response) => {
@@ -26,33 +28,44 @@ const ProductDetail = () => {
     return <div style={{ textAlign: 'center' }}>Loading...</div>;
   }
 
+  const handleAddToCart = () => {
+    localStorage.setItem('cartProduct', JSON.stringify({
+      image: product.image,
+      name: product.name,
+      price: product.formattedPrice,
+      quantity: count  
+    }));
+    
+    window.location.href = '/cart';
+  };
+
   return (
     <div>
       <Header />
       <div className="product-detail-container">
         <ul className="breadcrumb">
+          
           <li><Link to="/">Trang chủ</Link></li>
           <li><Link to={`/category/${product.category.id}`}>{product.category.name}</Link></li>
           <li><Link to={`/product/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>{product.name}</Link></li>
         </ul>
         <div className="product-main-info">
-          <img className="product-image" src={`http://localhost:8080/Image/${product.image}`} alt={product.name} />
+          <img className="product-image" src={`http://localhost:8090/Image/${product.image}`} alt={product.name} />
           <div className="product-info">
             <h4>{product.name}</h4>
             <p>Mã số: {product.code} | Thương hiệu: LILY</p>
             <p>Giá: <span style={{ fontWeight: 'bold', fontSize: '20px' }}>{product.formattedPrice}₫</span>/Chiếc</p>
             <p>Phù hợp với: {product.fate}</p>
            
-            <ProductCounter product={product} />
+            <ProductCounter count={count} setCount={setCount} product={product} />
 
             <div className="purchase-buttons">
-            <button className="purchase-button">
-  <Link to={'/cart'} className="purchase-link">
-    <span>Đặt Mua Ngay</span>
-    <br/>
-    <span className="small-text">Giao hàng toàn quốc</span>
-  </Link>  
-</button>
+              <button className="purchase-button" onClick={handleAddToCart}>
+                <span>Đặt Mua Ngay</span>
+                <br />
+                <span className="small-text">Giao hàng toàn quốc</span>
+              </button>
+
               <button className="purchase-button">
                 <a>0339.806.596</a><br/>
                 <a style={{fontSize:'12px'}}> Gọi Ngay Để Mua</a>
@@ -184,8 +197,7 @@ const ProductDetail = () => {
   );
 };
 
-const ProductCounter = ({ product }) => {
-  const [count, setCount] = useState(1);
+const ProductCounter = ({ count, setCount, product }) => {
   const price = parseFloat(product.formattedPrice.replace(/[^0-9.-]+/g, ""));
   
   const increment = () => setCount(count + 1);

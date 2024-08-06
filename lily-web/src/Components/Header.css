@@ -116,13 +116,11 @@ body {
   padding: 3px 5px;
   transition: color 0.3s ease, background-color 0.3s ease;
   cursor: pointer;
-
 }
 
 .category ul li a:hover {
   color: #fd0000;
 }
-
 
 .sub-category {
   display: none;
@@ -133,29 +131,29 @@ body {
   border-radius: 5px;
   position: absolute;
   top: 100%;
-  width: auto; /* Chiều rộng đủ để chứa 5 cột */
+  width: auto;
   box-sizing: border-box;
   overflow: hidden;
   height: auto;
   list-style: none;
 }
+
 ul {
-  list-style-type: none; /* Loại bỏ dấu chấm hoặc gạch đầu dòng */
-  padding: 0; /* Xóa khoảng cách padding của ul */
-  margin: 0; /* Xóa khoảng cách margin của ul */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-
 .sub-category-grid {
-  display: flex; /* Dùng flex để hiển thị cột theo hàng */
-  gap: 10px; /* Khoảng cách giữa các cột */
+  display: flex;
+  gap: 10px;
   text-align: left;
   padding-left: 10px;
 }
 
 .sub-category-grid div {
-  flex: 1; /* Tự động phân phối chiều rộng cho các cột */
-  min-width: 0; /* Ngăn cột bị thu hẹp quá mức */
+  flex: 1;
+  min-width: 0;
 }
 
 .sub-category a {
@@ -167,8 +165,6 @@ ul {
   display: block;
   white-space: nowrap;
   font-size: 14px;
-
- 
 }
 
 @media (max-width: 768px) {
@@ -214,8 +210,6 @@ ul {
 .header-section {
   color: white;
 }
-
-
 
 .user-actions a {
   color: white;

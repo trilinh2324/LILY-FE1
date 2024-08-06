@@ -124,6 +124,8 @@ const data = {
 };
 
 const Cart = () => {
+
+  const cartProduct = JSON.parse(localStorage.getItem('cartProduct'));
   const [formData, setFormData] = useState({
     recipient: '',
     phone: '',
@@ -174,8 +176,20 @@ const Cart = () => {
         </div>
         <div className='form-nav'>
           <div className='form-header'>
-            <div>f</div>
-            <div>h</div>
+            <div className='LIST-CART'></div>
+            <div className="cart-container">
+        {cartProduct ? (
+          <div className="cart-item">
+            <img className="cart-item-image" style={{width:'100px',height:'100px',marginLeft:'20px',paddingTop:'20px',padding:'20px'}} src={`http://localhost:8090/Image/${cartProduct.image}`} alt={cartProduct.name} />
+          <a>{cartProduct.name}</a>
+            <div className="cart-item-info">
+              <p>Giá: {cartProduct.price}₫</p>
+            </div>
+          </div>
+        ) : (
+          <p>Giỏ hàng trống.</p>
+        )}
+      </div>
           </div>
           <hr className="custom-hr" />
           <div>
