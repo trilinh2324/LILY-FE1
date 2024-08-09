@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import './login.css'; // Đảm bảo bạn đã tạo và liên kết file CSS này
+import './login.css'; 
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
+import { AuthContext } from '../context/AuthContext';
 
 const generateCaptcha = () => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -39,6 +40,7 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleCaptchaRefresh = () => {
     setCaptcha(generateCaptchaWithColors());
@@ -67,7 +69,11 @@ const Login = () => {
       if (response.status === 200) {
         setMessage(response.data.message); // Thông báo thành công
         setError('');
-        localStorage.setItem('username', userName); // Lưu tên người dùng vào localStorage
+        login({ 
+          userId: response.data.userId, 
+          userName: response.data.userName, 
+          role: response.data.role 
+        }); // Lưu thông tin người dùng vào AuthContext
         navigate('/'); // Chuyển hướng đến trang chủ khi đăng nhập thành công
       }
     } catch (error) {

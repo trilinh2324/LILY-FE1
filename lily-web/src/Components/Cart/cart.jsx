@@ -184,6 +184,7 @@ const Cart = () => {
           <a>{cartProduct.name}</a>
             <div className="cart-item-info">
               <p>Giá: {cartProduct.price}₫</p>
+              <p>số lương : {cartProduct.quantity}</p>
             </div>
           </div>
         ) : (

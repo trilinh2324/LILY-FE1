@@ -5,12 +5,14 @@ import ProductDetail from './Components/Product/ProductDetail';
 import Cart from './Components/Cart/cart';
 import Login from './Components/User/Login';
 import Register from './Components/User/Register';
+import { AuthProvider } from "./Components/context/AuthContext";
 
 const App = () => {
   
-  const [userId, setUserId] = useState(null);
+
   
   return (
+    <AuthProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -20,6 +22,7 @@ const App = () => {
         <Route path='/register' element={<Register/>} />
       </Routes>
     </Router>
+    </AuthProvider>
   );
 };
 
