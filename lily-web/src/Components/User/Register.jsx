@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import './register.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const generateCaptcha = () => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -34,11 +37,11 @@ const Register = () => {
   const [captcha, setCaptcha] = useState(generateCaptchaWithColors());
   const [captchaInput, setCaptchaInput] = useState('');
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [agreement, setAgreement] = useState(false);
-  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleCaptchaRefresh = () => {
     setCaptcha(generateCaptchaWithColors());
@@ -54,25 +57,52 @@ const Register = () => {
     return passwordPattern.test(password);
   };
 
-  const handleSubmit = (e) => {
+  const validatePhoneNumber = (phoneNumber) => {
+    const phonePattern = /^0\d{9}$/;
+    return phonePattern.test(phoneNumber);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const captchaString = captcha.map(item => item.char).join('');
-    
+
     if (captchaInput !== captchaString) {
-      setError('Mã xác nhận không đúng. Vui lòng thử lại.');
+      toast.error('Mã xác nhận không đúng. Vui lòng thử lại.');
       handleCaptchaRefresh();
     } else if (!validateUsername(username)) {
-      setError('Tên tài khoản phải dài hơn 6 ký tự, có ít nhất một ký tự in hoa và một số.');
+      toast.error('Tên tài khoản phải dài hơn 6 ký tự, có ít nhất một ký tự in hoa và một số.');
+    } else if (!validatePhoneNumber(phoneNumber)) {
+      toast.error('Số điện thoại của bạn nhập chưa đúng.');
     } else if (!validatePassword(password)) {
-      setError('Mật khẩu phải dài hơn 6 ký tự, có ít nhất một ký tự in hoa, một số và một ký tự đặc biệt.');
+      toast.error('Mật khẩu phải dài hơn 6 ký tự, có ít nhất một ký tự in hoa, một số và một ký tự đặc biệt.');
     } else if (password !== confirmPassword) {
-      setError('Mật khẩu và xác nhận mật khẩu không khớp.');
+      toast.error('Mật khẩu và xác nhận mật khẩu không khớp.');
     } else if (!agreement) {
-      setError('Bạn phải đồng ý với các điều khoản.');
+      toast.error('Bạn phải đồng ý với các điều khoản.');
     } else {
-     
-      setError('');
-      alert('Đăng ký thành công!');
+      try {
+        await axios.post('http://localhost:8090/api/user/register', null, {
+          params: {
+            userName: username,
+            password,
+            phone_number: phoneNumber,
+          },
+        });
+        toast.success('Đăng ký thành công!', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
+      } catch (error) {
+        toast.error('Đăng ký thất bại. Vui lòng thử lại.');
+      }
     }
   };
 
@@ -83,42 +113,40 @@ const Register = () => {
         <div className='register-form-container'>
           <h4>Đăng ký thành viên</h4>
           <form onSubmit={handleSubmit}>
-            {error && <div className="error-message">{error}</div>}
-        <div>
-            <div className='form-group1'>
-              <label htmlFor='username'>Tài Khoản(*):</label>
-              <input
-                type='text'
-                id='username'
-                name='username'
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
+            <div>
+              <div className='form-group1'>
+                <label htmlFor='username'>Tài Khoản(*):</label>
+                <input
+                  type='text'
+                  id='username'
+                  name='username'
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <small className='hint'>* Tên tài khoản dài hơn 6 ký tự, có 1 ký tự in hoa và 1 số.</small>
             </div>
-            <small className='hint'>* Tên tk dài hơn 6 ký tự, có 1 cái in hoa và 1 số.</small>
-            </div>
             <div className='form-group1'>
-              <label htmlFor='email'>E-mail:</label>
+              <label htmlFor='phone'>Số điện thoại</label>
               <input
-                type='email'
-                id='email'
-                name='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                required
               />
             </div>
             <div>
-            <div className='form-group1'>
-              <label htmlFor='password'>Mật khẩu(*):</label>
-              <input
-                type='password'
-                id='password'
-                name='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <small className='hint'>* Mật khẩu dài hơn 6 ký tự, có 1 cái in hoa, 1 số và một ký tự đặc biệt.</small>
+              <div className='form-group1'>
+                <label htmlFor='password'>Mật khẩu(*):</label>
+                <input
+                  type='password'
+                  id='password'
+                  name='password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <small className='hint'>* Mật khẩu dài hơn 6 ký tự, có 1 ký tự in hoa, 1 số và một ký tự đặc biệt.</small>
             </div>
             <div className='form-group1'>
               <label htmlFor='confirm-password'>Xác nhận mật khẩu(*):</label>
@@ -161,14 +189,15 @@ const Register = () => {
               </label>
             </div>
             <hr className="custom-hr1" /><br/>
-            <button3 type='submit'>Đăng ký</button3>
+            <button style={{marginLeft:'42%'}} type='submit'>Đăng ký</button>
           </form>
           <div className='form-links'>
-            <a>Nếu có tài khoản xin mời <Link to='/login'> Đăng nhập</Link></a>  
+            <span>Nếu có tài khoản xin mời <Link to='/login'> Đăng nhập</Link></span>
           </div>
         </div>
       </div>
       <Footer />
+      <ToastContainer />
     </div>
   );
 };

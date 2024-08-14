@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
 import { AuthContext } from '../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const generateCaptcha = () => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -37,8 +39,6 @@ const Login = () => {
   const [captchaInput, setCaptchaInput] = useState('');
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
@@ -51,7 +51,7 @@ const Login = () => {
     const captchaString = captcha.map(item => item.char).join('');
     
     if (captchaInput !== captchaString) {
-      setError('Mã xác nhận không đúng. Vui lòng thử lại.');
+      toast.error('Mã xác nhận không đúng. Vui lòng thử lại.');
       handleCaptchaRefresh();
       return;
     }
@@ -67,8 +67,7 @@ const Login = () => {
       });
   
       if (response.status === 200) {
-        setMessage(response.data.message); // Thông báo thành công
-        setError('');
+        toast.success('Đăng nhập thành công!');
         login({ 
           userId: response.data.userId, 
           userName: response.data.userName, 
@@ -78,12 +77,21 @@ const Login = () => {
       }
     } catch (error) {
       if (error.response) {
-        setError(error.response.data.message || 'Đã xảy ra lỗi. Vui lòng thử lại.');
+        if (error.response.status === 401) {
+          if (error.response.data.message.includes('username')) {
+            toast.error('Tên tài khoản không đúng.');
+          } else if (error.response.data.message.includes('password')) {
+            toast.error('Mật khẩu không đúng.');
+          } else {
+            toast.error(error.response.data.message || 'Đã xảy ra lỗi. Vui lòng thử lại.');
+          }
+        } else {
+          toast.error('Đã xảy ra lỗi. Vui lòng thử lại.');
+        }
       } else {
         console.error('Error:', error);
-        setError('Đã xảy ra lỗi. Vui lòng thử lại.');
+        toast.error('Đã xảy ra lỗi. Vui lòng thử lại.');
       }
-      setMessage(''); // Xóa thông báo thành công nếu có lỗi
     }
   };
   
@@ -94,8 +102,6 @@ const Login = () => {
         <div className='login-form-container'>
           <h2>Đăng nhập thành viên</h2>
           <form onSubmit={handleSubmit}>
-            {error && <div className='error-message'>{error}</div>}
-            {message && !error && <div className='success-message'>{message}</div>}
             <div className='form-group'>
               <label htmlFor='username'>Tài Khoản(*):</label>
               <input
@@ -149,6 +155,7 @@ const Login = () => {
         </div>
       </div>
       <Footer />
+      <ToastContainer />
     </div>
   );
 };

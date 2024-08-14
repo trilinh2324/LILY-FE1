@@ -6,7 +6,7 @@ import Cart from './Components/Cart/cart';
 import Login from './Components/User/Login';
 import Register from './Components/User/Register';
 import { AuthProvider } from "./Components/context/AuthContext";
-
+import Cart1 from './Components/Cart/test';
 const App = () => {
   
 
@@ -20,6 +20,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
+        <Route path="/cart1" element={<Cart1 />} />
       </Routes>
     </Router>
     </AuthProvider>

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext,useReducer } from 'react';
+import axios from 'axios'
 import './cart.css';
 import { Link } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
-
+import { AuthContext } from '../context/AuthContext'; 
 const data = {
     VIETNAM: {
         provinces: {
@@ -124,47 +125,62 @@ const data = {
 };
 
 const Cart = () => {
+  const { user } = useContext(AuthContext); 
+  const [cartItems, setCartItems] = useState([]);
+  const [error, setError] = useState('');
+  const [totalAmount, setTotalAmount] = useState(0);
 
-  const cartProduct = JSON.parse(localStorage.getItem('cartProduct'));
-  const [formData, setFormData] = useState({
-    recipient: '',
-    phone: '',
-    email: '',
-    region: 'VIETNAM',
-    province: '',
-    district: '',
-    address: '',
-    deliveryTime: ''
-  });
+  useEffect(() => {
+    if (user && user.userId) {
+      fetchCartItems(user.userId);
+    }
+  }, [user]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-      ...(name === 'region' && { province: '', district: '' }), 
-      ...(name === 'province' && { district: '' })
-    }));
+  const fetchCartItems = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:8090/api/cart/user/${userId}`);
+      const itemsWithInitialQuantity = response.data.map(item => ({
+        ...item,
+        quantity: item.quantity || 1, // Giả sử số lượng ban đầu là 1 nếu không có
+      }));
+      setCartItems(itemsWithInitialQuantity);
+      calculateTotal(itemsWithInitialQuantity);
+    } catch (error) {
+      setError('Có lỗi xảy ra khi lấy dữ liệu giỏ hàng.');
+      console.error('Error fetching cart items:', error);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form Data Submitted: ', formData);
-   
+  const calculateTotal = (items) => {
+    const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+    setTotalAmount(total);
+  };
+  const removeItemFromCart = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8090/api/cart/removeFromCart/${id}`);
+      // Fetch the updated cart items after deletion
+      if (user && user.userId) {
+        fetchCartItems(user.userId);
+      }
+    } catch (error) {
+      setError('Có lỗi xảy ra khi xóa sản phẩm khỏi giỏ hàng.');
+      console.error('Error removing item from cart:', error);
+    }
   };
 
-  const renderProvinces = () => {
-    return Object.keys(data[formData.region].provinces).map((province) => (
-      <option key={province} value={province}>{province}</option>
-    ));
+
+  const handleQuantityChange = (itemId, delta) => {
+    const updatedItems = cartItems.map((item) =>
+      item.id === itemId ? { ...item, quantity: item.quantity + delta } : item
+    );
+    setCartItems(updatedItems);
+    calculateTotal(updatedItems);
   };
 
-  const renderDistricts = () => {
-    const districts = data[formData.region].provinces[formData.province] || [];
-    return districts.map((district) => (
-      <option key={district} value={district}>{district}</option>
-    ));
-  };
+  if (!user) {
+    return <p>Bạn cần đăng nhập để xem giỏ hàng.</p>;
+  }
+
 
   return (
     <div className='form-con'>
@@ -178,23 +194,51 @@ const Cart = () => {
           <div className='form-header'>
             <div className='LIST-CART'></div>
             <div className="cart-container">
-        {cartProduct ? (
-          <div className="cart-item">
-            <img className="cart-item-image" style={{width:'100px',height:'100px',marginLeft:'20px',paddingTop:'20px',padding:'20px'}} src={`http://localhost:8090/Image/${cartProduct.image}`} alt={cartProduct.name} />
-          <a>{cartProduct.name}</a>
-            <div className="cart-item-info">
-              <p>Giá: {cartProduct.price}₫</p>
-              <p>số lương : {cartProduct.quantity}</p>
-            </div>
-          </div>
-        ) : (
-          <p>Giỏ hàng trống.</p>
-        )}
+       
+
+          {/* hiển thị sản phẩm trong giỏ hàng Ở ĐÂY */}
+          {error && <div className="error-message">{error}</div>}
+      {cartItems.length === 0 ? (
+        <p>Giỏ hàng của bạn đang trống.</p>
+      ) : (
+        <div>
+          <ul className="cart-items">
+            {cartItems.map((item) => (
+              <li key={item.id} className="cart-item">
+                <div className='navH-cart'>
+                  <div className='nav-left'>
+                  <img src={`http://localhost:8090/Image/${item.product.image}`} style={{width:'100px',height:'100px'}} alt={item.product.name} className="cart-item-image" />
+                <a>{item.product.name}</a>
+                  </div>
+                
+                <div  className='nav-rigth'>
+                < a style={{marginLeft:'220px',paddingTop:'20px',color:'red'}}>{item.product.price.toLocaleString()} ₫</a>
+                 <br/>
+                 <br/>
+                 <div  style={{marginLeft:'220px'}}>
+                 <button onClick={() => handleQuantityChange(item.id, -1)} disabled={item.quantity <= 1}>-</button>
+                 <span>  {item.quantity}  </span>
+                 <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
+                 </div>
+                </div>
+                </div>
+                <button onClick={() => removeItemFromCart(item.id)} className="remove-button">Xóa</button>
+
+                <hr className="custom-hr3" />
+              
+              </li>
+            ))}
+          </ul>
+          
+        </div>
+      )}
+          
+       
       </div>
           </div>
-          <hr className="custom-hr" />
+          
           <div>
-            <span style={{ color: 'red', fontWeight: 'bold', fontSize: '18px', marginLeft: '60%' }}>Tổng số tiền :</span>
+            <span style={{ color: 'red', fontWeight: 'bold', fontSize: '18px', marginLeft: '60%' }}>Tổng số tiền :{totalAmount.toLocaleString()}₫</span>
           </div>
           <hr className="custom-hr1" />
           <div className='formButton'>
@@ -202,14 +246,13 @@ const Cart = () => {
           </div>
           <hr className="custom-hr1" /><br/>
         <div className='from-home'>
-          <form onSubmit={handleSubmit}>
+          <form >
             <div >
               <label>Người nhận hàng:</label>
               <input style={{marginLeft:'100px',width:'500px',padding:'10px',height:'35px'}}
                 type="text"
                 name="recipient"
-                value={formData.recipient}
-                onChange={handleChange}
+              
               />
             </div><br/>
             <div>
@@ -217,8 +260,7 @@ const Cart = () => {
               <input style={{marginLeft:'130px',width:'500px',padding:'10px',height:'35px'}}
                 type="text"
                 name="phone"
-                value={formData.phone}
-                onChange={handleChange}
+                
               />
             </div><br/>
             <div>
@@ -226,17 +268,14 @@ const Cart = () => {
               <input style={{marginLeft:'185px',width:'500px',padding:'10px',height:'35px'}}
                 type="email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
+               
               />
             </div><br/>
             <div>
               <label>Khu vực phân phối:</label>
               <select   style={{marginLeft:'90px',width:'110px',height:'35px'}}
                 name="region"
-                value={formData.region}
-                onChange={handleChange}
-              >
+                 >
                 <option value="VIETNAM"> VIỆT NAM</option>
                 <option value="JAPAN">NHẬT BẢN</option>
               </select>
@@ -244,40 +283,32 @@ const Cart = () => {
               
               <select  style={{marginLeft:'10px',width:'190px',height:'35px'}}
                 name="province"
-                value={formData.province}
-                onChange={handleChange}
+               
               >
                 <option value="">Chọn tỉnh/thành phố</option>
-                {renderProvinces()}
+          
               </select>
         
             
               <select  style={{marginLeft:'10px',width:'170px',height:'35px'}}
                 name="district"
-                value={formData.district}
-                onChange={handleChange}
+               
               >
                 <option value="">Chọn quận/huyện</option>
-                {renderDistricts()}
+               
               </select>
             </div><br/>
             <div>
               <label>Địa chỉ:</label>
               <input style={{marginLeft:'178px',width:'500px',padding:'10px',height:'35px'}}
                 type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-              />
+                name="address" />
             </div><br/>
             <div>
               <label>Thời gian giao hàng:</label>
               <input  style={{marginLeft:'85px',width:'500px',padding:'10px',height:'35px'}}
                 type="text"
-                name="deliveryTime"
-                value={formData.deliveryTime}
-                onChange={handleChange}
-              />
+                name="deliveryTime"  />
             </div><br/>
             <hr className="custom-hr1" />
             <button style={{marginTop:'10px',marginBottom:'50px',marginLeft:'40%'}} type="submit">Xác nhận </button>

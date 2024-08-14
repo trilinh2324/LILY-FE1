@@ -37,16 +37,17 @@
     height: auto;
   }
   
-  .custom-hr3 {
+  .custom-hr {
     border: none;
-    border-top: 1px solid #bbbaba;
-    width: 95%;
-    
+    border-top: 1px solid #dfdddd;
+    margin: 20px 0;
+    width: 90%;
+    margin: auto;
   }
   
   .custom-hr1 {
     border: none;
-    border-top: 1px solid #8b8787;
+    border-top: 2px solid #8b8787;
     margin: 20px 0;
     width: 100%;
     margin: auto;
@@ -74,14 +75,10 @@
   .from-home{
    padding-left: 50px;
   }
-  .navH-cart{
-    display: flex;
-  }
-  .nav-left{
-    flex: 1;
-margin-top: 20px;
-  }
-  .nav-rigth{
-    flex: 1;
-    margin-top: 30px;
-  }
+ .clost-button{
+    position: fixed; /* Sử dụng fixed để ảnh nằm trên cùng và không di chuyển khi cuộn trang */
+    top: 0;
+    left: 0;
+    z-index: 999; /* Đảm bảo ảnh và nút "x" nằm trên tất cả các nội dung khác */
+ 
+ }

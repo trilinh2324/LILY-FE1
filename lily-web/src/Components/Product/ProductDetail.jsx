@@ -153,11 +153,74 @@ const ProductDetail = () => {
             <p>Giá sản phẩm thay đổi theo trọng lượng. Vui lòng liên hệ hotline để được tư vấn.</p>
           </div>
           <div className="product-details2">
-            <div style={{ backgroundColor: '#d4d0d0', padding: '10px' }} className='tableTop'>
-              <a>Sản phẩm liên quan</a>
+            <div style={{backgroundColor:'#d4d0d0' , padding:'10px'}} className='tableTop' >
+              <a>bạn cần gọi TƯ VẤN ?</a> <br/>
+              <input style={{width:'300px',padding:'7px'}} type="text" id="name" name="name" placeholder='Tên của anh/chị'/><br/>
+              <input style={{marginTop:'5px',width:'300px',padding:'7px'}} type="text" id="phone" name="phone" placeholder='Nhập số điện thoại của anh/chị' /><br/>
+              <button style={{marginTop:'5px',width:'300px',height:'60px',backgroundColor:'red'}} type="submit">
+                <a style={{color:'white'}}>HÃY GỌI LẠI CHO TÔI!!!</a><br/>
+                <a style={{color:'white'}}> Tôi đang rất quan tâm sản phẩm này</a>
+              </button>
             </div>
             <div>
-              {/* Your related products component here */}
+              <table style={{borderLeft:' 1px solid  #e7e6e6',borderRight:'1px solid  #e7e6e6'}} className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Thông Số</th>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Loại sản phẩm</td>
+                    <td>{product.category.name}</td>
+                  </tr>
+                  <tr>
+                    <td>Thương hiệu</td>
+                    <td>LILY</td>
+                  </tr>
+                  <tr>
+                    <td>Kiểu chế tác</td>
+                    <td>Thiết kế thủ công tinh xảo phù hợp làm quà tặng sinh nhật hoặc trong các dịp ý nghĩa</td>
+                  </tr>
+                  <tr>
+                    <td>Loại vàng</td>
+                    <td>{product.productDetail.goldType}</td>
+                  </tr>
+                  <tr>
+                    <td>Trọng lượng vàng tham khảo</td>
+                    <td>{product.productDetail.goldWeight} Chỉ</td>
+                  </tr>
+                  <tr>
+                    <td>Màu vàng</td>
+                    <td>{product.productDetail.goldColor}</td>
+                  </tr>
+                  <tr>
+                    <td>Bảo hành</td>
+                    <td>{product.productDetail.warrantyPeriod}</td>
+                  </tr>
+                  <tr>
+                    <td>Xuất xứ</td>
+                    <td>{product.productDetail.origin}</td>
+                  </tr>
+                  <tr>
+                    <td>Thu mua lại</td>
+                    <td>{product.productDetail.buybackOption ? 'Có' : 'Không'}</td>
+                  </tr>
+                  <tr>
+                    <td>Phạm vi bán</td>
+                    <td style={{ letterSpacing:'1px' }}>Giao hàng toàn quốc</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <br/>
+            <div>
+              <div style={{backgroundColor:'#d4d0d0' , padding:'10px',width:'320px'}}>
+                <a>Sản phẩm liên quan</a>
+              </div>
+              <div></div>
             </div>
           </div>
         </div>
