@@ -6,7 +6,7 @@ import Cart from './Components/Cart/cart';
 import Login from './Components/User/Login';
 import Register from './Components/User/Register';
 import { AuthProvider } from "./Components/context/AuthContext";
-import Cart1 from './Components/Cart/test';
+import Cart1 from './Components/Cart/test2';
 const App = () => {
   
 

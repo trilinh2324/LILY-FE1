@@ -40,7 +40,8 @@
   .custom-hr3 {
     border: none;
     border-top: 1px solid #bbbaba;
-    width: 95%;
+    width: 90%;
+    margin-left: 40px;
     
   }
   
@@ -50,6 +51,7 @@
     margin: 20px 0;
     width: 100%;
     margin: auto;
+    margin-right: 20px;
   }
   
   .formButton {
@@ -76,12 +78,21 @@
   }
   .navH-cart{
     display: flex;
+    width: 100%;
+    height: auto;
   }
   .nav-left{
     flex: 1;
 margin-top: 20px;
+margin-left: 20px;
   }
   .nav-rigth{
     flex: 1;
     margin-top: 30px;
+  }
+  .cart-container{
+    margin-left: -2rem;
+  }
+  .update-button{
+    margin-left: 30px;
   }

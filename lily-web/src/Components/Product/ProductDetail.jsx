@@ -31,32 +31,51 @@ const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [count, setCount] = useState(1);
-  const navigate = useNavigate(); // Hook để điều hướng
+  const navigate = useNavigate(); 
 
   const handleAddToCart = async () => {
     if (!user) {
       toast.info('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng', {
-        onClose: () => navigate('/login'), // Chuyển đến trang đăng nhập sau khi thông báo kết thúc
+        onClose: () => navigate('/login'), 
+        autoClose: 1000,
+      });
+      return;
+    }
+
+    if (count > product.quantity) {
+      toast.error(`Số lượng sản phẩm trong kho không đủ`, {
         autoClose: 1000,
       });
       return;
     }
 
     try {
-      await addToCart(user.userName, product.id, count);
-      toast.success('Sản phẩm đã được thêm vào giỏ hàng', {
-        onClose: () => navigate('/cart'), // Chuyển đến trang giỏ hàng sau khi thông báo kết thúc
+      const response = await addToCart(user.userName, product.id, count);
+  
+      if (response.includes('Sản phẩm đã được thêm vào giỏ hàng')) {
+        toast.success('Sản phẩm đã được thêm vào giỏ hàng', {
+          onClose: () => navigate('/cart'), 
+          autoClose: 1000,
+        });
+      } else if (response.includes('Số lượng đã được cập nhật trong giỏ hàng')) {
+        toast.success('Số lượng đã được cập nhật trong giỏ hàng', {
+          autoClose: 1000,
+        });
+      } else {
+        toast.error(response, {
+          autoClose: 1000,
+        });
+      }
+    } catch (error) {
+      toast.error('Số lượng sản phẩm của shop không đủ', {
         autoClose: 1000,
       });
-    } catch (error) {
-      toast.error('Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng');
     }
   };
 
   useEffect(() => {
     axios.get(`http://localhost:8090/api/products/${id}`)
       .then((response) => {
-        console.log(response.data);
         setProduct(response.data);
       })
       .catch((error) => {
@@ -226,7 +245,7 @@ const ProductDetail = () => {
         </div>
       </div>
       <Footer />
-      <ToastContainer /> {/* Component để hiển thị thông báo */}
+      <ToastContainer /> 
     </div>
   );
 };

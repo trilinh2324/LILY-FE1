@@ -1,134 +1,20 @@
-import React, { useEffect, useState, useContext,useReducer } from 'react';
-import axios from 'axios'
+import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
 import './cart.css';
 import { Link } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
-import { AuthContext } from '../context/AuthContext'; 
-const data = {
-    VIETNAM: {
-        provinces: {
-          'An Giang': ['Long Xuyên', 'Châu Đốc', 'Tân Châu', 'An Phú', 'Châu Phú', 'Châu Thành', 'Phú Tân', 'Thoại Sơn'],
-          'Bà Rịa - Vũng Tàu': ['Vũng Tàu', 'Bà Rịa', 'Châu Đức', 'Côn Đảo', 'Long Điền', 'Đất Đỏ', 'Tân Thành'],
-          'Bắc Giang': ['Bắc Giang', 'Hiệp Hòa', 'Lạng Giang', 'Lục Nam', 'Lục Ngạn', 'Yên Thế', 'Tân Yên', 'Sơn Động', 'Yên Dũng', 'Việt Yên'],
-          'Bắc Kạn': ['Bắc Kạn', 'Ba Bể', 'Bạch Thông', 'Chợ Đồn', 'Chợ Mới', 'Hà Quảng', 'Hòa An', 'Ngân Sơn', 'Pác Nặm', 'Na Rì'],
-          'Bạc Liêu': ['Bạc Liêu', 'Đông Hải', 'Giá Rai', 'Hòa Bình', 'Hồng Dân', 'Vĩnh Lợi', 'Châu Hưng', 'Phước Long'],
-          'Bắc Ninh': ['Bắc Ninh', 'Gia Bình', 'Lương Tài', 'Quế Võ', 'Thuận Thành', 'Yên Phong', 'Tiên Du', 'Đình Bảng'],
-          'Bến Tre': ['Bến Tre', 'Ba Tri', 'Bình Đại', 'Châu Thành', 'Chợ Lách', 'Mỏ Cày Bắc', 'Mỏ Cày Nam', 'Thạnh Phú', 'Giồng Trôm'],
-          'Bình Định': ['Quy Nhơn', 'An Lão', 'Hoài Ân', 'Hoài Nhơn', 'Phù Mỹ', 'Phù Cát', 'Tây Sơn', 'Vân Canh', 'Vân Canh', 'Nhơn Hòa'],
-          'Bình Dương': ['Thủ Dầu Một', 'Bàu Bàng', 'Bến Cát', 'Dầu Tiếng', 'Di An', 'Tân Uyên', 'Dĩ An', 'Thuận An'],
-          'Bình Phước': ['Đồng Xoài', 'Bình Long', 'Bù Đăng', 'Bù Đốp', 'Bù Gia Mập', 'Chơn Thành', 'Đắk Hoa', 'Đồng Phú'],
-          'Bình Thuận': ['Phan Thiết', 'Bắc Bình', 'Đức Linh', 'Hàm Tân', 'Hàm Thuận Bắc', 'Hàm Thuận Nam', 'Tuy Phong', 'Tánh Linh', 'Phú Quý'],
-          'Cà Mau': ['Cà Mau', 'Cái Nước', 'Đầm Dơi', 'Năm Căn', 'Ngọc Hiển', 'U Minh', 'Trần Văn Thời', 'Kế Sách', 'Thới Bình'],
-          'Cần Thơ': ['Ninh Kiều', 'Bình Thủy', 'Cái Răng', 'Ô Môn', 'Phong Điền', 'Thốt Nốt', 'Cờ Đỏ', 'Vĩnh Thạnh', 'Kiên Tuế'],
-          'Cao Bằng': ['Cao Bằng', 'Bảo Lạc', 'Bảo Lâm', 'Hà Quảng', 'Hòa An', 'Nguyên Bình', 'Quảng Uyên', 'Thạch An', 'Trùng Khánh'],
-          'Đà Nẵng': ['Hải Châu', 'Cẩm Lệ', 'Liên Chiểu', 'Ngũ Hành Sơn', 'Sơn Trà'],
-          'Đắk Lắk': ['Buôn Ma Thuột', 'Buôn Đôn', 'Cư Kuin', 'Cư Mgar', 'Ea H\'leo', 'Ea Súp', 'Krông Ana', 'Krông Bông', 'Krông Buk'],
-          'Đắk Nông': ['Gia Nghĩa', 'Cư Jút', 'Đắk Glong', 'Đắk Mil', 'Đắk R\'Lấp', 'Đắk Song', 'Krông Nô', 'Tuy Đức'],
-          'Điện Biên': ['Điện Biên Phủ', 'Mường Lay', 'Điện Biên', 'Điện Biên Đông', 'Mường Ảng', 'Tủa Chùa', 'Tuần Giáo', 'Nậm Pồ'],
-          'Đồng Nai': ['Biên Hòa', 'Long Khánh', 'Cẩm Mỹ', 'Định Quán', 'Long Thành', 'Nhơn Trạch', 'Tân Phú', 'Vĩnh Cửu', 'Trảng Bom'],
-          'Đồng Tháp': ['Cao Lãnh', 'Sa Đéc', 'Hồng Ngự', 'Châu Thành', 'Châu Thành A', 'Lai Vung', 'Thanh Bình', 'Tam Nông'],
-          'Gia Lai': ['Pleiku', 'An Khê', 'Ayun Pa', 'Chư Păh', 'Chư Prông', 'Chư Sê', 'Kbang', 'Krông Pa', 'Phú Thiện', 'Đắk Pơ'],
-          'Hà Giang': ['Hà Giang', 'Bắc Mê', 'Bắc Quang', 'Đồng Văn', 'Hoàng Su Phì', 'Mèo Vạc', 'Quản Bạ', 'Vị Xuyên', 'Yên Minh'],
-          'Hà Nam': ['Phủ Lý', 'Bình Lục', 'Duy Tiên', 'Kim Bảng', 'Lý Nhân'],
-          'Hà Nội': ['Ba Đình', 'Hoàn Kiếm', 'Tây Hồ', 'Long Biên', 'Hà Đông', 'Cầu Giấy', 'Hoàng Mai', 'Thanh Xuân', 'Đống Đa', 'Nam Từ Liêm'],
-          'Hà Tĩnh': ['Hà Tĩnh', 'Hồng Lĩnh', 'Kỳ Anh', 'Nghi Xuân', 'Thạch Hà', 'Can Lộc', 'Cẩm Xuyên', 'Đức Thọ', 'Lộc Hà'],
-          'Hải Dương': ['Hải Dương', 'Chí Linh', 'Kinh Môn', 'Nam Sách', 'Thanh Hà', 'Kim Thành', 'Cẩm Giàng', 'Tứ Kỳ', 'Gia Lộc'],
-          'Hải Phòng': ['Hồng Bàng', 'Lê Chân', 'Ngô Quyền', 'Hải An', 'Kiến An', 'Đồ Sơn', 'Dương Kinh', 'An Dương', 'An Lão'],
-          'Hậu Giang': ['Vị Thanh', 'Ngã Bảy', 'Châu Thành', 'Châu Thành A', 'Long Mỹ', 'Phụng Hiệp', 'Vị Thủy', 'Kế Sách'],
-          'Hòa Bình': ['Hòa Bình', 'Cao Phong', 'Đà Bắc', 'Kim Bôi', 'Lạc Sơn', 'Lạc Thủy', 'Lương Sơn', 'Tân Lạc', 'Yên Thủy'],
-          'Hưng Yên': ['Hưng Yên', 'Ân Thi', 'Khoái Châu', 'Kim Động', 'Mỹ Hào', 'Phù Cừ', 'Tiên Lữ', 'Trưng Trắc', 'Văn Lâm'],
-          'Khánh Hòa': ['Nha Trang', 'Cam Ranh', 'Ninh Hòa', 'Diên Khánh', 'Khánh Sơn', 'Khánh Vĩnh', 'Vạn Ninh', 'Cam Lâm'],
-          'Kiên Giang': ['Rạch Giá', 'Hà Tiên', 'An Biên', 'An Minh', 'Châu Thành', 'Giồng Riềng', 'Gò Quao', 'Tây An', 'U Minh Thượng'],
-          'Kon Tum': ['Kon Tum', 'Đắk Glei', 'Đắk Hà', 'Đắk Tô', 'Kon Plông', 'Kon Rẫy', 'Ngọc Hồi', 'Sa Thầy', 'Tu Mơ Rông'],
-          'Lai Châu': ['Lai Châu', 'Mường Tè', 'Nậm Nhùn', 'Phong Thổ', 'Sìn Hồ', 'Tân Uyên', 'Than Uyên', 'Tam Đường', 'Lao Chải'],
-          'Lâm Đồng': ['Đà Lạt', 'Bảo Lộc', 'Bảo Lâm', 'Cát Tiên', 'Đạ Huoai', 'Đạ Tẻh', 'Đơn Dương', 'Lạc Dương', 'Lạc Sơn'],
-          'Lạng Sơn': ['Lạng Sơn', 'Chi Lăng', 'Hữu Lũng', 'Lộc Bình', 'Phú Lương', 'Văn Quan', 'Văn Lãng', 'Văn Bình', 'Tràng Định'],
-          'Lào Cai': ['Lào Cai', 'Sa Pa', 'Bát Xát', 'Mường Khương', 'Văn Bàn', 'Bảo Thắng', 'Bảo Yên', 'Simacai', 'Văn Bàn'],
-          'Long An': ['Tân An', 'Bến Lức', 'Cần Đước', 'Cần Giuộc', 'Châu Thành', 'Thủ Thừa', 'Tân Trụ', 'Tân Hưng', 'Tân Thạnh'],
-          'Nam Định': ['Nam Định', 'Mỹ Lộc', 'Vụ Bản', 'Ý Yên', 'Trực Ninh', 'Xuân Trường', 'Giao Thủy', 'Nghĩa Hưng', 'Nam Trực'],
-          'Nghệ An': ['Vinh', 'Cửa Lò', 'Nghĩa Đàn', 'Quỳ Châu', 'Quỳ Hợp', 'Quỳnh Lưu', 'Thanh Chương', 'Tân Kỳ', 'Hưng Nguyên'],
-          'Ninh Bình': ['Ninh Bình', 'Tam Điệp', 'Kim Sơn', 'Yên Khánh', 'Yên Mô', 'Hoa Lư', 'Gia Viễn', 'Nho Quan'],
-          'Ninh Thuận': ['Phan Rang-Tháp Chàm', 'Ninh Sơn', 'Ninh Phước', 'Ninh Hải', 'Bác Ái', 'Ninh Hải', 'Thuận Bắc', 'Thuận Nam'],
-          'Phú Thọ': ['Việt Trì', 'Thanh Sơn', 'Thanh Thủy', 'Đoan Hùng', 'Phù Ninh', 'Lâm Thao', 'Cẩm Khê', 'Tam Nông', 'Tân Sơn'],
-          'Phú Yên': ['Tuy Hòa', 'Sông Cầu', 'Đông Hòa', 'Tuy An', 'Phú Hòa', 'Sông Hinh', 'Tây Hòa', 'Đồng Xuân'],
-          'Quảng Bình': ['Đồng Hới', 'Ba Đồn', 'Bố Trạch', 'Quảng Trạch', 'Lệ Thủy', 'Minh Hóa', 'Tuyên Hóa', 'Vũng Chùa'],
-          'Quảng Nam': ['Tam Kỳ', 'Hội An', 'Duy Xuyên', 'Quế Sơn', 'Nông Sơn', 'Hiệp Đức', 'Thăng Bình', 'Phú Ninh', 'Tiên Phước'],
-          'Quảng Ngãi': ['Quảng Ngãi', 'Bình Sơn', 'Duy Xuyên', 'Hoài Nhơn', 'Lý Sơn', 'Mộ Đức', 'Sơn Tịnh', 'Tư Nghĩa', 'Trà Bồng'],
-          'Quảng Trị': ['Đông Hà', 'Quảng Trị', 'Gio Linh', 'Hướng Hóa', 'Vĩnh Linh', 'Triệu Phong', 'Cam Lộ', 'Cồn Cát'],
-          'Sóc Trăng': ['Sóc Trăng', 'Châu Thành', 'Cù Lao Dung', 'Kế Sách', 'Ngã Năm', 'Thạnh Trị', 'Long Phú', 'Mỹ Xuyên', 'Trần Đề'],
-          'Sơn La': ['Sơn La', 'Mộc Châu', 'Yên Châu', 'Mai Sơn', 'Sông Mã', 'Sông Mộc', 'Vân Hồ', 'Quỳnh Nhai', 'Bắc Yên'],
-          'Tây Ninh': ['Tây Ninh', 'Tân Biên', 'Tân Châu', 'Dương Minh Châu', 'Châu Thành', 'Gò Dầu', 'Bến Cầu', 'Hòa Thành'],
-          'Thái Bình': ['Thái Bình', 'Đông Hưng', 'Hưng Hà', 'Quỳnh Phụ', 'Tiền Hải', 'Thái Thụy', 'Vũ Thư', 'Kiến Xương'],
-          'Thái Nguyên': ['Thái Nguyên', 'Sông Công', 'Phổ Yên', 'Đại Từ', 'Định Hóa', 'Phú Bình', 'Tân Cương', 'Đại Từ', 'Tân Thái'],
-          'Thanh Hóa': ['Thanh Hóa', 'Bỉm Sơn', 'Sầm Sơn', 'Bá Thước', 'Cẩm Thủy', 'Mường Lát', 'Ngọc Lặc', 'Thọ Xuân', 'Tĩnh Gia'],
-          'Thừa Thiên Huế': ['Huế', 'Hương Thủy', 'Hương Trà', 'A Lưới', 'Nam Đông', 'Phú Vang', 'Phú Lộc', 'Quảng Điền'],
-          'Tiền Giang': ['Mỹ Tho', 'Cai Lậy', 'Cái Bè', 'Châu Thành', 'Chợ Gạo', 'Gò Công', 'Tân Phước', 'Tân Phú', 'Tân Thành'],
-          'TP. Hồ Chí Minh': ['Quận 1', 'Quận 2', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6', 'Quận 7', 'Quận 8', 'Quận 9', 'Quận 10'],
-          'Trà Vinh': ['Trà Vinh', 'Càng Long', 'Cầu Kè', 'Cầu Ngang', 'Châu Thành', 'Tiểu Cần', 'Duyên Hải', 'Trà Cú'],
-          'Tuyên Quang': ['Tuyên Quang', 'Chiêm Hóa', 'Hàm Yên', 'Lâm Bình', 'Na Hang', 'Yên Sơn', 'Sơn Dương', 'Tuyên Quang'],
-          'Vĩnh Long': ['Vĩnh Long', 'Bình Minh', 'Bình Tân', 'Long Hồ', 'Mang Thít', 'Tam Bình', 'Vũng Liêm', 'Trà Ôn', 'Lấp Vò'],
-          'Vĩnh Phúc': ['Vĩnh Yên', 'Phúc Yên', 'Bình Xuyên', 'Lập Thạch', 'Sông Lô', 'Tam Dương', 'Tam Đảo', 'Vĩnh Tường'],
-          'Yên Bái': ['Yên Bái', 'Nghĩa Lộ', 'Lục Yên', 'Mù Cang Chải', 'Trạm Tấu', 'Văn Chấn', 'Văn Yên', 'Yên Bình'],
-          
-        }
-      },
-      JAPAN: {
-        provinces: {
-          'Hokkaido': ['Sapporo', 'Hakodate', 'Asahikawa', 'Otaru', 'Obihiro'],
-      'Aomori': ['Aomori', 'Hachinohe', 'Hirosaki', 'Kuroishi', 'Gonohe'],
-      'Iwate': ['Morioka', 'Ichinoseki', 'Kitakami', 'Oshu', 'Fujisawa'],
-      'Miyagi': ['Sendai', 'Ishinomaki', 'Sakura', 'Shiogama', 'Kakuda'],
-      'Akita': ['Akita', 'Odate', 'Yokote', 'Kazuno', 'Daisen'],
-      'Yamagata': ['Yamagata', 'Yonezawa', 'Tendo', 'Sagae', 'Nanyo'],
-      'Fukushima': ['Fukushima', 'Koriyama', 'Iwaki', 'Soma', 'Aizuwakamatsu'],
-      'Ibaraki': ['Mito', 'Tsukuba', 'Hitachi', 'Tsuchiura', 'Waterfront'],
-      'Tochigi': ['Utsunomiya', 'Kanuma', 'Nikkō', 'Oyama', 'Shimotsuke'],
-      'Gunma': ['Maebashi', 'Kiryu', 'Takasaki', 'Isesaki', 'Ota'],
-      'Saitama': ['Saitama', 'Kawaguchi', 'Koshigaya', 'Omiya', 'Urawa'],
-      'Chiba': ['Chiba', 'Narita', 'Kashiwa', 'Funabashi', 'Ichihara'],
-      'Tokyo': ['Tokyo', 'Shinjuku', 'Shibuya', 'Ikebukuro', 'Ueno'],
-      'Kanagawa': ['Yokohama', 'Kawasaki', 'Sagamihara', 'Fujisawa', 'Odawara'],
-      'Niigata': ['Niigata', 'Nagaoka', 'Sanjo', 'Joetsu', 'Tainai'],
-      'Toyama': ['Toyama', 'Takaoka', 'Uozu', 'Kurobe', 'Nanto'],
-      'Ishikawa': ['Kanazawa', 'Kaga', 'Wajima', 'Nomi', 'Hakusan'],
-      'Fukui': ['Fukui', 'Sabae', 'Echizen', 'Awara', 'Tsuruga'],
-      'Yamanashi': ['Kofu', 'Fujiyoshida', 'Otsuki', 'Minami-Alps', 'Nirasaki'],
-      'Nagano': ['Nagano', 'Matsumoto', 'Suwa', 'Ina', 'Okaya'],
-      'Gifu': ['Gifu', 'Tajimi', 'Kakamigahara', 'Seki', 'Gujo'],
-      'Shizuoka': ['Shizuoka', 'Hamamatsu', 'Numazu', 'Fujinomiya', 'Ishikawa'],
-      'Aichi': ['Nagoya', 'Toyota', 'Okazaki', 'Kasugai', 'Ichinomiya'],
-      'Mie': ['Tsu', 'Yokkaichi', 'Ise', 'Matsusaka', 'Kameyama'],
-      'Shiga': ['Otsu', 'Hikone', 'Kusatsu', 'Nagahama', 'Shiga'],
-      'Kyoto': ['Kyoto', 'Uji', 'Kameoka', 'Muko', 'Fushimi'],
-      'Osaka': ['Osaka', 'Sakai', 'Higashiosaka', 'Takatsuki', 'Toyonaka'],
-      'Hyogo': ['Kobe', 'Himeji', 'Amagasaki', 'Nishinomiya', 'Kakogawa'],
-      'Nara': ['Nara', 'Yamatokoriyama', 'Ikoma', 'Tenri', 'Kashihara'],
-      'Wakayama': ['Wakayama', 'Hashimoto', 'Kishiwada', 'Tanabe', 'Wakayama'],
-      'Tottori': ['Tottori', 'Yonago', 'Kurayoshi', 'Sakaiminato', 'Tottori'],
-      'Shimane': ['Matsue', 'Izumo', 'Masuda', 'Nihonmatsu', 'Shimane'],
-      'Okayama': ['Okayama', 'Kurashiki', 'Tsuyama', 'Sanyo-Onoda', 'Okayama'],
-      'Hiroshima': ['Hiroshima', 'Fukuyama', 'Kure', 'Hatsukaichi', 'Hiroshima'],
-      'Yamaguchi': ['Yamaguchi', 'Ube', 'Shunan', 'Hagi', 'Yamaguchi'],
-      'Tokushima': ['Tokushima', 'Oe', 'Mima', 'Anan', 'Naruto'],
-      'Kochi': ['Kochi', 'Nankoku', 'Tosa', 'Ino', 'Kochi'],
-      'Fukuoka': ['Fukuoka', 'Kitakyushu', 'Kurume', 'Fukuoka', 'Munakata'],
-      'Saga': ['Saga', 'Tosu', 'Karatsu', 'Imari', 'Saga'],
-      'Nagasaki': ['Nagasaki', 'Sasebo', 'Isahaya', 'Omura', 'Nagasaki'],
-      'Kumamoto': ['Kumamoto', 'Kumamoto', 'Yatsushiro', 'Tamana', 'Kumamoto'],
-      'Oita': ['Oita', 'Beppu', 'Takamatsu', 'Oita', 'Saiki'],
-      'Miyazaki': ['Miyazaki', 'Hyuga', 'Nichinan', 'Kokono', 'Miyazaki'],
-      'Kagoshima': ['Kagoshima', 'Kirishima', 'Izumi', 'Satsumasendai', 'Kagoshima'],
-      'Okinawa': ['Naha', 'Okinawa', 'Uruma', 'Miyakojima', 'Ishigaki'],
-        }
-      }
-};
+import { AuthContext } from '../context/AuthContext';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Cart = () => {
-  const { user } = useContext(AuthContext); 
+  const { user } = useContext(AuthContext);
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState('');
   const [totalAmount, setTotalAmount] = useState(0);
+  const [updatedQuantities, setUpdatedQuantities] = useState({}); // Track updated quantities
+  const [showZeroQuantityToast, setShowZeroQuantityToast] = useState(false); // Track if zero quantity toast has been shown
 
   useEffect(() => {
     if (user && user.userId) {
@@ -139,12 +25,8 @@ const Cart = () => {
   const fetchCartItems = async (userId) => {
     try {
       const response = await axios.get(`http://localhost:8090/api/cart/user/${userId}`);
-      const itemsWithInitialQuantity = response.data.map(item => ({
-        ...item,
-        quantity: item.quantity || 1, // Giả sử số lượng ban đầu là 1 nếu không có
-      }));
-      setCartItems(itemsWithInitialQuantity);
-      calculateTotal(itemsWithInitialQuantity);
+      setCartItems(response.data);
+      calculateTotal(response.data);
     } catch (error) {
       setError('Có lỗi xảy ra khi lấy dữ liệu giỏ hàng.');
       console.error('Error fetching cart items:', error);
@@ -155,10 +37,16 @@ const Cart = () => {
     const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
     setTotalAmount(total);
   };
+
   const removeItemFromCart = async (id) => {
     try {
       await axios.delete(`http://localhost:8090/api/cart/removeFromCart/${id}`);
-      // Fetch the updated cart items after deletion
+      if (!showZeroQuantityToast) {
+        setShowZeroQuantityToast(true);
+        toast.success('Đã xóa sản phẩm có số lượng bằng 0 khỏi giỏ hàng.', { autoClose: 2000 });
+      } else {
+        toast.success('Sản phẩm đã bị xóa khỏi giỏ hàng.', { autoClose: 2000 });
+      }
       if (user && user.userId) {
         fetchCartItems(user.userId);
       }
@@ -168,19 +56,86 @@ const Cart = () => {
     }
   };
 
+  const handleQuantityChange = (id, value) => {
+    const item = cartItems.find(item => item.id === id);
+    const maxQuantity = item?.product?.quantity || 0;
+    let quantity = parseInt(value, 10);
 
-  const handleQuantityChange = (itemId, delta) => {
-    const updatedItems = cartItems.map((item) =>
-      item.id === itemId ? { ...item, quantity: item.quantity + delta } : item
-    );
-    setCartItems(updatedItems);
-    calculateTotal(updatedItems);
+    if (isNaN(quantity) || quantity < 0) {
+     
+    }
+
+    if (quantity > maxQuantity) {
+      toast.error(`Số lượng "${item.product.name}" vượt quá số lượng có sẵn.`, { autoClose: 3000 });
+      quantity = maxQuantity; 
+    }
+
+    setUpdatedQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [id]: quantity,
+    }));
+  };
+
+  const updateCartItemQuantity = async (id, quantity) => {
+    try {
+      const response = await axios.patch(`http://localhost:8090/api/cart/updateQuantity/${id}`, { quantity });
+      return response;
+    } catch (error) {
+      throw new Error(error.response?.data || 'Có lỗi xảy ra khi cập nhật số lượng sản phẩm.');
+    }
+  };
+
+  const handleUpdateClick = async () => {
+    const invalidQuantities = Object.entries(updatedQuantities).filter(([id, quantity]) => quantity <= 0);
+
+    if (invalidQuantities.length > 0) {
+      await Promise.all(invalidQuantities.map(([id]) => removeItemFromCart(id)));
+      if (user && user.userId) {
+        fetchCartItems(user.userId);
+      }
+      return;
+    }
+
+    const exceededQuantities = cartItems.filter(item => {
+      const newQuantity = updatedQuantities[item.id] !== undefined ? updatedQuantities[item.id] : item.quantity;
+      return newQuantity > item.product.quantity;
+    });
+
+    if (exceededQuantities.length > 0) {
+      exceededQuantities.forEach(item => {
+        toast.error(`Số lượng "${item.product.name}" vượt quá số lượng có sẵn.`, { autoClose: 3000 });
+      });
+      return;
+    }
+
+    const updatePromises = cartItems.map(async (item) => {
+      const quantity = updatedQuantities[item.id] !== undefined ? updatedQuantities[item.id] : item.quantity;
+      try {
+        if (quantity <= 0) {
+          await removeItemFromCart(item.id); 
+        } else {
+          await updateCartItemQuantity(item.id, quantity);
+        }
+      } catch (error) {
+        setError(error.message);
+      }
+    });
+
+    try {
+      await Promise.all(updatePromises);
+      toast.success('Cập nhật giỏ hàng thành công.', { autoClose: 2000 });
+      if (user && user.userId) {
+        fetchCartItems(user.userId);
+      }
+    } catch (error) {
+      setError('Có lỗi xảy ra khi cập nhật giỏ hàng.');
+      console.error('Error updating cart items:', error);
+    }
   };
 
   if (!user) {
     return <p>Bạn cần đăng nhập để xem giỏ hàng.</p>;
   }
-
 
   return (
     <div className='form-con'>
@@ -194,55 +149,68 @@ const Cart = () => {
           <div className='form-header'>
             <div className='LIST-CART'></div>
             <div className="cart-container">
-       
-
-          {/* hiển thị sản phẩm trong giỏ hàng Ở ĐÂY */}
-          {error && <div className="error-message">{error}</div>}
-      {cartItems.length === 0 ? (
-        <p>Giỏ hàng của bạn đang trống.</p>
-      ) : (
-        <div>
-          <ul className="cart-items">
-            {cartItems.map((item) => (
-              <li key={item.id} className="cart-item">
-                <div className='navH-cart'>
-                  <div className='nav-left'>
-                  <img src={`http://localhost:8090/Image/${item.product.image}`} style={{width:'100px',height:'100px'}} alt={item.product.name} className="cart-item-image" />
-                <a>{item.product.name}</a>
-                  </div>
-                
-                <div  className='nav-rigth'>
-                < a style={{marginLeft:'220px',paddingTop:'20px',color:'red'}}>{item.product.price.toLocaleString()} ₫</a>
-                 <br/>
-                 <br/>
-                 <div  style={{marginLeft:'220px'}}>
-                 <button onClick={() => handleQuantityChange(item.id, -1)} disabled={item.quantity <= 1}>-</button>
-                 <span>  {item.quantity}  </span>
-                 <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
-                 </div>
+              <ToastContainer />
+              {error && <div className="error-message">{error}</div>}
+              {cartItems.length === 0 ? (
+                <p style={{ textAlign: 'center' }}>Giỏ hàng của bạn đang trống.</p>
+              ) : (
+                <div>
+                  <ul className="cart-items">
+                    {cartItems.map((item) => (
+                      <li key={item.id} className="cart-item">
+                        <div className='navH-cart'>
+                          <div className='nav-left'>
+                            <a 
+                              style={{ borderRadius: '50px', color: 'black', position: 'absolute', marginLeft: '15px', marginTop: '-8px', backgroundColor: '#f4f4f4', width: '25px', height: '25px', textAlign: 'center', textDecoration: 'none' }} 
+                              onClick={() => removeItemFromCart(item.id)} 
+                              className="remove-button"
+                            >
+                              X
+                            </a>
+                            <img 
+                              src={`http://localhost:8090/Image/${item.product.image}`} 
+                              style={{ width: '100px', height: '100px', marginLeft: '20px' }} 
+                              alt={item.product.name} 
+                              className="cart-item-image" 
+                            />
+                            <a 
+                              style={{ width: 'fit-content', display: 'inline-block', position: 'relative', top: '-40px' }}
+                            >
+                              {item.product.name}
+                            </a>
+                          </div>
+                          <div className='nav-right'>
+                            <br />
+                            <a 
+                              style={{ paddingTop: '20px', color: 'red', marginRight: '100px' }}
+                            >
+                              {item.product.price.toLocaleString()} ₫
+                            </a>
+                            <br />
+                            <div>
+                              <input
+                                style={{ width: '70px' }}
+                                type="number"
+                                value={updatedQuantities[item.id] !== undefined ? updatedQuantities[item.id] : item.quantity}
+                                onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <hr className="custom-hr3" />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                </div>
-                <button onClick={() => removeItemFromCart(item.id)} className="remove-button">Xóa</button>
-
-                <hr className="custom-hr3" />
-              
-              </li>
-            ))}
-          </ul>
-          
-        </div>
-      )}
-          
-       
-      </div>
+              )}
+            </div>
           </div>
-          
           <div>
-            <span style={{ color: 'red', fontWeight: 'bold', fontSize: '18px', marginLeft: '60%' }}>Tổng số tiền :{totalAmount.toLocaleString()}₫</span>
+            <span style={{ color: 'red', fontWeight: 'bold', fontSize: '18px', marginLeft: '60%' }}>Tổng số tiền : {totalAmount.toLocaleString()} ₫</span>
           </div>
           <hr className="custom-hr1" />
           <div className='formButton'>
-            <button>Cập nhật giỏ hàng</button>
+            <button onClick={handleUpdateClick} className="update-button">Cập nhật giỏ hàng</button>
           </div>
           <hr className="custom-hr1" /><br/>
         <div className='from-home'>
