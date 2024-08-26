@@ -1,370 +1,174 @@
-import React, { useEffect, useState, useContext,useReducer } from 'react';
-import axios from 'axios'
-import './test.css';
-import { Link } from 'react-router-dom';
+import './test1.css';
 import Header from '../Header';
 import Footer from '../Footer';
-import { AuthContext } from '../context/AuthContext'; 
-const data = {
-    VIETNAM: {
-        provinces: {
-          'An Giang': ['Long Xuyên', 'Châu Đốc', 'Tân Châu', 'An Phú', 'Châu Phú', 'Châu Thành', 'Phú Tân', 'Thoại Sơn'],
-          'Bà Rịa - Vũng Tàu': ['Vũng Tàu', 'Bà Rịa', 'Châu Đức', 'Côn Đảo', 'Long Điền', 'Đất Đỏ', 'Tân Thành'],
-          'Bắc Giang': ['Bắc Giang', 'Hiệp Hòa', 'Lạng Giang', 'Lục Nam', 'Lục Ngạn', 'Yên Thế', 'Tân Yên', 'Sơn Động', 'Yên Dũng', 'Việt Yên'],
-          'Bắc Kạn': ['Bắc Kạn', 'Ba Bể', 'Bạch Thông', 'Chợ Đồn', 'Chợ Mới', 'Hà Quảng', 'Hòa An', 'Ngân Sơn', 'Pác Nặm', 'Na Rì'],
-          'Bạc Liêu': ['Bạc Liêu', 'Đông Hải', 'Giá Rai', 'Hòa Bình', 'Hồng Dân', 'Vĩnh Lợi', 'Châu Hưng', 'Phước Long'],
-          'Bắc Ninh': ['Bắc Ninh', 'Gia Bình', 'Lương Tài', 'Quế Võ', 'Thuận Thành', 'Yên Phong', 'Tiên Du', 'Đình Bảng'],
-          'Bến Tre': ['Bến Tre', 'Ba Tri', 'Bình Đại', 'Châu Thành', 'Chợ Lách', 'Mỏ Cày Bắc', 'Mỏ Cày Nam', 'Thạnh Phú', 'Giồng Trôm'],
-          'Bình Định': ['Quy Nhơn', 'An Lão', 'Hoài Ân', 'Hoài Nhơn', 'Phù Mỹ', 'Phù Cát', 'Tây Sơn', 'Vân Canh', 'Vân Canh', 'Nhơn Hòa'],
-          'Bình Dương': ['Thủ Dầu Một', 'Bàu Bàng', 'Bến Cát', 'Dầu Tiếng', 'Di An', 'Tân Uyên', 'Dĩ An', 'Thuận An'],
-          'Bình Phước': ['Đồng Xoài', 'Bình Long', 'Bù Đăng', 'Bù Đốp', 'Bù Gia Mập', 'Chơn Thành', 'Đắk Hoa', 'Đồng Phú'],
-          'Bình Thuận': ['Phan Thiết', 'Bắc Bình', 'Đức Linh', 'Hàm Tân', 'Hàm Thuận Bắc', 'Hàm Thuận Nam', 'Tuy Phong', 'Tánh Linh', 'Phú Quý'],
-          'Cà Mau': ['Cà Mau', 'Cái Nước', 'Đầm Dơi', 'Năm Căn', 'Ngọc Hiển', 'U Minh', 'Trần Văn Thời', 'Kế Sách', 'Thới Bình'],
-          'Cần Thơ': ['Ninh Kiều', 'Bình Thủy', 'Cái Răng', 'Ô Môn', 'Phong Điền', 'Thốt Nốt', 'Cờ Đỏ', 'Vĩnh Thạnh', 'Kiên Tuế'],
-          'Cao Bằng': ['Cao Bằng', 'Bảo Lạc', 'Bảo Lâm', 'Hà Quảng', 'Hòa An', 'Nguyên Bình', 'Quảng Uyên', 'Thạch An', 'Trùng Khánh'],
-          'Đà Nẵng': ['Hải Châu', 'Cẩm Lệ', 'Liên Chiểu', 'Ngũ Hành Sơn', 'Sơn Trà'],
-          'Đắk Lắk': ['Buôn Ma Thuột', 'Buôn Đôn', 'Cư Kuin', 'Cư Mgar', 'Ea H\'leo', 'Ea Súp', 'Krông Ana', 'Krông Bông', 'Krông Buk'],
-          'Đắk Nông': ['Gia Nghĩa', 'Cư Jút', 'Đắk Glong', 'Đắk Mil', 'Đắk R\'Lấp', 'Đắk Song', 'Krông Nô', 'Tuy Đức'],
-          'Điện Biên': ['Điện Biên Phủ', 'Mường Lay', 'Điện Biên', 'Điện Biên Đông', 'Mường Ảng', 'Tủa Chùa', 'Tuần Giáo', 'Nậm Pồ'],
-          'Đồng Nai': ['Biên Hòa', 'Long Khánh', 'Cẩm Mỹ', 'Định Quán', 'Long Thành', 'Nhơn Trạch', 'Tân Phú', 'Vĩnh Cửu', 'Trảng Bom'],
-          'Đồng Tháp': ['Cao Lãnh', 'Sa Đéc', 'Hồng Ngự', 'Châu Thành', 'Châu Thành A', 'Lai Vung', 'Thanh Bình', 'Tam Nông'],
-          'Gia Lai': ['Pleiku', 'An Khê', 'Ayun Pa', 'Chư Păh', 'Chư Prông', 'Chư Sê', 'Kbang', 'Krông Pa', 'Phú Thiện', 'Đắk Pơ'],
-          'Hà Giang': ['Hà Giang', 'Bắc Mê', 'Bắc Quang', 'Đồng Văn', 'Hoàng Su Phì', 'Mèo Vạc', 'Quản Bạ', 'Vị Xuyên', 'Yên Minh'],
-          'Hà Nam': ['Phủ Lý', 'Bình Lục', 'Duy Tiên', 'Kim Bảng', 'Lý Nhân'],
-          'Hà Nội': ['Ba Đình', 'Hoàn Kiếm', 'Tây Hồ', 'Long Biên', 'Hà Đông', 'Cầu Giấy', 'Hoàng Mai', 'Thanh Xuân', 'Đống Đa', 'Nam Từ Liêm'],
-          'Hà Tĩnh': ['Hà Tĩnh', 'Hồng Lĩnh', 'Kỳ Anh', 'Nghi Xuân', 'Thạch Hà', 'Can Lộc', 'Cẩm Xuyên', 'Đức Thọ', 'Lộc Hà'],
-          'Hải Dương': ['Hải Dương', 'Chí Linh', 'Kinh Môn', 'Nam Sách', 'Thanh Hà', 'Kim Thành', 'Cẩm Giàng', 'Tứ Kỳ', 'Gia Lộc'],
-          'Hải Phòng': ['Hồng Bàng', 'Lê Chân', 'Ngô Quyền', 'Hải An', 'Kiến An', 'Đồ Sơn', 'Dương Kinh', 'An Dương', 'An Lão'],
-          'Hậu Giang': ['Vị Thanh', 'Ngã Bảy', 'Châu Thành', 'Châu Thành A', 'Long Mỹ', 'Phụng Hiệp', 'Vị Thủy', 'Kế Sách'],
-          'Hòa Bình': ['Hòa Bình', 'Cao Phong', 'Đà Bắc', 'Kim Bôi', 'Lạc Sơn', 'Lạc Thủy', 'Lương Sơn', 'Tân Lạc', 'Yên Thủy'],
-          'Hưng Yên': ['Hưng Yên', 'Ân Thi', 'Khoái Châu', 'Kim Động', 'Mỹ Hào', 'Phù Cừ', 'Tiên Lữ', 'Trưng Trắc', 'Văn Lâm'],
-          'Khánh Hòa': ['Nha Trang', 'Cam Ranh', 'Ninh Hòa', 'Diên Khánh', 'Khánh Sơn', 'Khánh Vĩnh', 'Vạn Ninh', 'Cam Lâm'],
-          'Kiên Giang': ['Rạch Giá', 'Hà Tiên', 'An Biên', 'An Minh', 'Châu Thành', 'Giồng Riềng', 'Gò Quao', 'Tây An', 'U Minh Thượng'],
-          'Kon Tum': ['Kon Tum', 'Đắk Glei', 'Đắk Hà', 'Đắk Tô', 'Kon Plông', 'Kon Rẫy', 'Ngọc Hồi', 'Sa Thầy', 'Tu Mơ Rông'],
-          'Lai Châu': ['Lai Châu', 'Mường Tè', 'Nậm Nhùn', 'Phong Thổ', 'Sìn Hồ', 'Tân Uyên', 'Than Uyên', 'Tam Đường', 'Lao Chải'],
-          'Lâm Đồng': ['Đà Lạt', 'Bảo Lộc', 'Bảo Lâm', 'Cát Tiên', 'Đạ Huoai', 'Đạ Tẻh', 'Đơn Dương', 'Lạc Dương', 'Lạc Sơn'],
-          'Lạng Sơn': ['Lạng Sơn', 'Chi Lăng', 'Hữu Lũng', 'Lộc Bình', 'Phú Lương', 'Văn Quan', 'Văn Lãng', 'Văn Bình', 'Tràng Định'],
-          'Lào Cai': ['Lào Cai', 'Sa Pa', 'Bát Xát', 'Mường Khương', 'Văn Bàn', 'Bảo Thắng', 'Bảo Yên', 'Simacai', 'Văn Bàn'],
-          'Long An': ['Tân An', 'Bến Lức', 'Cần Đước', 'Cần Giuộc', 'Châu Thành', 'Thủ Thừa', 'Tân Trụ', 'Tân Hưng', 'Tân Thạnh'],
-          'Nam Định': ['Nam Định', 'Mỹ Lộc', 'Vụ Bản', 'Ý Yên', 'Trực Ninh', 'Xuân Trường', 'Giao Thủy', 'Nghĩa Hưng', 'Nam Trực'],
-          'Nghệ An': ['Vinh', 'Cửa Lò', 'Nghĩa Đàn', 'Quỳ Châu', 'Quỳ Hợp', 'Quỳnh Lưu', 'Thanh Chương', 'Tân Kỳ', 'Hưng Nguyên'],
-          'Ninh Bình': ['Ninh Bình', 'Tam Điệp', 'Kim Sơn', 'Yên Khánh', 'Yên Mô', 'Hoa Lư', 'Gia Viễn', 'Nho Quan'],
-          'Ninh Thuận': ['Phan Rang-Tháp Chàm', 'Ninh Sơn', 'Ninh Phước', 'Ninh Hải', 'Bác Ái', 'Ninh Hải', 'Thuận Bắc', 'Thuận Nam'],
-          'Phú Thọ': ['Việt Trì', 'Thanh Sơn', 'Thanh Thủy', 'Đoan Hùng', 'Phù Ninh', 'Lâm Thao', 'Cẩm Khê', 'Tam Nông', 'Tân Sơn'],
-          'Phú Yên': ['Tuy Hòa', 'Sông Cầu', 'Đông Hòa', 'Tuy An', 'Phú Hòa', 'Sông Hinh', 'Tây Hòa', 'Đồng Xuân'],
-          'Quảng Bình': ['Đồng Hới', 'Ba Đồn', 'Bố Trạch', 'Quảng Trạch', 'Lệ Thủy', 'Minh Hóa', 'Tuyên Hóa', 'Vũng Chùa'],
-          'Quảng Nam': ['Tam Kỳ', 'Hội An', 'Duy Xuyên', 'Quế Sơn', 'Nông Sơn', 'Hiệp Đức', 'Thăng Bình', 'Phú Ninh', 'Tiên Phước'],
-          'Quảng Ngãi': ['Quảng Ngãi', 'Bình Sơn', 'Duy Xuyên', 'Hoài Nhơn', 'Lý Sơn', 'Mộ Đức', 'Sơn Tịnh', 'Tư Nghĩa', 'Trà Bồng'],
-          'Quảng Trị': ['Đông Hà', 'Quảng Trị', 'Gio Linh', 'Hướng Hóa', 'Vĩnh Linh', 'Triệu Phong', 'Cam Lộ', 'Cồn Cát'],
-          'Sóc Trăng': ['Sóc Trăng', 'Châu Thành', 'Cù Lao Dung', 'Kế Sách', 'Ngã Năm', 'Thạnh Trị', 'Long Phú', 'Mỹ Xuyên', 'Trần Đề'],
-          'Sơn La': ['Sơn La', 'Mộc Châu', 'Yên Châu', 'Mai Sơn', 'Sông Mã', 'Sông Mộc', 'Vân Hồ', 'Quỳnh Nhai', 'Bắc Yên'],
-          'Tây Ninh': ['Tây Ninh', 'Tân Biên', 'Tân Châu', 'Dương Minh Châu', 'Châu Thành', 'Gò Dầu', 'Bến Cầu', 'Hòa Thành'],
-          'Thái Bình': ['Thái Bình', 'Đông Hưng', 'Hưng Hà', 'Quỳnh Phụ', 'Tiền Hải', 'Thái Thụy', 'Vũ Thư', 'Kiến Xương'],
-          'Thái Nguyên': ['Thái Nguyên', 'Sông Công', 'Phổ Yên', 'Đại Từ', 'Định Hóa', 'Phú Bình', 'Tân Cương', 'Đại Từ', 'Tân Thái'],
-          'Thanh Hóa': ['Thanh Hóa', 'Bỉm Sơn', 'Sầm Sơn', 'Bá Thước', 'Cẩm Thủy', 'Mường Lát', 'Ngọc Lặc', 'Thọ Xuân', 'Tĩnh Gia'],
-          'Thừa Thiên Huế': ['Huế', 'Hương Thủy', 'Hương Trà', 'A Lưới', 'Nam Đông', 'Phú Vang', 'Phú Lộc', 'Quảng Điền'],
-          'Tiền Giang': ['Mỹ Tho', 'Cai Lậy', 'Cái Bè', 'Châu Thành', 'Chợ Gạo', 'Gò Công', 'Tân Phước', 'Tân Phú', 'Tân Thành'],
-          'TP. Hồ Chí Minh': ['Quận 1', 'Quận 2', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6', 'Quận 7', 'Quận 8', 'Quận 9', 'Quận 10'],
-          'Trà Vinh': ['Trà Vinh', 'Càng Long', 'Cầu Kè', 'Cầu Ngang', 'Châu Thành', 'Tiểu Cần', 'Duyên Hải', 'Trà Cú'],
-          'Tuyên Quang': ['Tuyên Quang', 'Chiêm Hóa', 'Hàm Yên', 'Lâm Bình', 'Na Hang', 'Yên Sơn', 'Sơn Dương', 'Tuyên Quang'],
-          'Vĩnh Long': ['Vĩnh Long', 'Bình Minh', 'Bình Tân', 'Long Hồ', 'Mang Thít', 'Tam Bình', 'Vũng Liêm', 'Trà Ôn', 'Lấp Vò'],
-          'Vĩnh Phúc': ['Vĩnh Yên', 'Phúc Yên', 'Bình Xuyên', 'Lập Thạch', 'Sông Lô', 'Tam Dương', 'Tam Đảo', 'Vĩnh Tường'],
-          'Yên Bái': ['Yên Bái', 'Nghĩa Lộ', 'Lục Yên', 'Mù Cang Chải', 'Trạm Tấu', 'Văn Chấn', 'Văn Yên', 'Yên Bình'],
-          
+import NhanHangTaiShop from '../Image/buy/GIAOHANG.gif';
+import GiaoHangTaiNha from '../Image/buy/NHANHANG.gif';
+import BankMoney from '../Image/buy/CHUYENKHOANG.gif';
+import MoneyHome from '../Image/buy/Tratien.png';
+import QRBANK from '../Image/buy/QR.jpg';
+
+import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useLocation } from 'react-router-dom';
+
+const Buy = () => {
+    const { user } = useContext(AuthContext);
+    const [cartItems, setCartItems] = useState([]);
+    const [error, setError] = useState('');
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [selectedMethod, setSelectedMethod] = useState('');
+    const { state } = useLocation();
+    const formData = state?.formData || {};
+
+    useEffect(() => {
+        if (user && user.userId) {
+            fetchCartItems(user.userId);
         }
-      },
-      JAPAN: {
-        provinces: {
-          'Hokkaido': ['Sapporo', 'Hakodate', 'Asahikawa', 'Otaru', 'Obihiro'],
-      'Aomori': ['Aomori', 'Hachinohe', 'Hirosaki', 'Kuroishi', 'Gonohe'],
-      'Iwate': ['Morioka', 'Ichinoseki', 'Kitakami', 'Oshu', 'Fujisawa'],
-      'Miyagi': ['Sendai', 'Ishinomaki', 'Sakura', 'Shiogama', 'Kakuda'],
-      'Akita': ['Akita', 'Odate', 'Yokote', 'Kazuno', 'Daisen'],
-      'Yamagata': ['Yamagata', 'Yonezawa', 'Tendo', 'Sagae', 'Nanyo'],
-      'Fukushima': ['Fukushima', 'Koriyama', 'Iwaki', 'Soma', 'Aizuwakamatsu'],
-      'Ibaraki': ['Mito', 'Tsukuba', 'Hitachi', 'Tsuchiura', 'Waterfront'],
-      'Tochigi': ['Utsunomiya', 'Kanuma', 'Nikkō', 'Oyama', 'Shimotsuke'],
-      'Gunma': ['Maebashi', 'Kiryu', 'Takasaki', 'Isesaki', 'Ota'],
-      'Saitama': ['Saitama', 'Kawaguchi', 'Koshigaya', 'Omiya', 'Urawa'],
-      'Chiba': ['Chiba', 'Narita', 'Kashiwa', 'Funabashi', 'Ichihara'],
-      'Tokyo': ['Tokyo', 'Shinjuku', 'Shibuya', 'Ikebukuro', 'Ueno'],
-      'Kanagawa': ['Yokohama', 'Kawasaki', 'Sagamihara', 'Fujisawa', 'Odawara'],
-      'Niigata': ['Niigata', 'Nagaoka', 'Sanjo', 'Joetsu', 'Tainai'],
-      'Toyama': ['Toyama', 'Takaoka', 'Uozu', 'Kurobe', 'Nanto'],
-      'Ishikawa': ['Kanazawa', 'Kaga', 'Wajima', 'Nomi', 'Hakusan'],
-      'Fukui': ['Fukui', 'Sabae', 'Echizen', 'Awara', 'Tsuruga'],
-      'Yamanashi': ['Kofu', 'Fujiyoshida', 'Otsuki', 'Minami-Alps', 'Nirasaki'],
-      'Nagano': ['Nagano', 'Matsumoto', 'Suwa', 'Ina', 'Okaya'],
-      'Gifu': ['Gifu', 'Tajimi', 'Kakamigahara', 'Seki', 'Gujo'],
-      'Shizuoka': ['Shizuoka', 'Hamamatsu', 'Numazu', 'Fujinomiya', 'Ishikawa'],
-      'Aichi': ['Nagoya', 'Toyota', 'Okazaki', 'Kasugai', 'Ichinomiya'],
-      'Mie': ['Tsu', 'Yokkaichi', 'Ise', 'Matsusaka', 'Kameyama'],
-      'Shiga': ['Otsu', 'Hikone', 'Kusatsu', 'Nagahama', 'Shiga'],
-      'Kyoto': ['Kyoto', 'Uji', 'Kameoka', 'Muko', 'Fushimi'],
-      'Osaka': ['Osaka', 'Sakai', 'Higashiosaka', 'Takatsuki', 'Toyonaka'],
-      'Hyogo': ['Kobe', 'Himeji', 'Amagasaki', 'Nishinomiya', 'Kakogawa'],
-      'Nara': ['Nara', 'Yamatokoriyama', 'Ikoma', 'Tenri', 'Kashihara'],
-      'Wakayama': ['Wakayama', 'Hashimoto', 'Kishiwada', 'Tanabe', 'Wakayama'],
-      'Tottori': ['Tottori', 'Yonago', 'Kurayoshi', 'Sakaiminato', 'Tottori'],
-      'Shimane': ['Matsue', 'Izumo', 'Masuda', 'Nihonmatsu', 'Shimane'],
-      'Okayama': ['Okayama', 'Kurashiki', 'Tsuyama', 'Sanyo-Onoda', 'Okayama'],
-      'Hiroshima': ['Hiroshima', 'Fukuyama', 'Kure', 'Hatsukaichi', 'Hiroshima'],
-      'Yamaguchi': ['Yamaguchi', 'Ube', 'Shunan', 'Hagi', 'Yamaguchi'],
-      'Tokushima': ['Tokushima', 'Oe', 'Mima', 'Anan', 'Naruto'],
-      'Kochi': ['Kochi', 'Nankoku', 'Tosa', 'Ino', 'Kochi'],
-      'Fukuoka': ['Fukuoka', 'Kitakyushu', 'Kurume', 'Fukuoka', 'Munakata'],
-      'Saga': ['Saga', 'Tosu', 'Karatsu', 'Imari', 'Saga'],
-      'Nagasaki': ['Nagasaki', 'Sasebo', 'Isahaya', 'Omura', 'Nagasaki'],
-      'Kumamoto': ['Kumamoto', 'Kumamoto', 'Yatsushiro', 'Tamana', 'Kumamoto'],
-      'Oita': ['Oita', 'Beppu', 'Takamatsu', 'Oita', 'Saiki'],
-      'Miyazaki': ['Miyazaki', 'Hyuga', 'Nichinan', 'Kokono', 'Miyazaki'],
-      'Kagoshima': ['Kagoshima', 'Kirishima', 'Izumi', 'Satsumasendai', 'Kagoshima'],
-      'Okinawa': ['Naha', 'Okinawa', 'Uruma', 'Miyakojima', 'Ishigaki'],
+    }, [user]);
+
+    const fetchCartItems = async (userId) => {
+        try {
+            const response = await axios.get(`http://localhost:8090/api/cart/user/${userId}`);
+            setCartItems(response.data);
+            calculateTotal(response.data);
+        } catch (error) {
+            setError('Có lỗi xảy ra khi lấy dữ liệu giỏ hàng.');
+            console.error('Error fetching cart items:', error);
         }
-      }
-};
+    };
 
-const Cart = () => {
-  const { user } = useContext(AuthContext); 
-  const [cartItems, setCartItems] = useState([]);
-  const [error, setError] = useState('');
-  const [totalAmount, setTotalAmount] = useState(0);
+    const calculateTotal = (items) => {
+        const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+        setTotalAmount(total);
+    };
 
-  useEffect(() => {
-    if (user && user.userId) {
-      fetchCartItems(user.userId);
-    }
-  }, [user]);
+    const removeItemFromCart = async (id) => {
+        try {
+            await axios.delete(`http://localhost:8090/api/cart/removeFromCart/${id}`);
+            toast.success('Sản phẩm đã bị xóa khỏi giỏ hàng.', { autoClose: 2000 });
+            if (user && user.userId) {
+                fetchCartItems(user.userId);
+            }
+        } catch (error) {
+            setError('Có lỗi xảy ra khi xóa sản phẩm khỏi giỏ hàng.');
+            console.error('Error removing item from cart:', error);
+        }
+    };
 
-  const fetchCartItems = async (userId) => {
-    try {
-      const response = await axios.get(`http://localhost:8090/api/cart/user/${userId}`);
-      const itemsWithInitialQuantity = response.data.map(item => ({
-        ...item,
-        quantity: item.quantity || 1, // Giả sử số lượng ban đầu là 1 nếu không có
-      }));
-      setCartItems(itemsWithInitialQuantity);
-      calculateTotal(itemsWithInitialQuantity);
-    } catch (error) {
-      setError('Có lỗi xảy ra khi lấy dữ liệu giỏ hàng.');
-      console.error('Error fetching cart items:', error);
-    }
-  };
+    const handleMethodSelect = (method) => {
+        setSelectedMethod(method);
+    };
 
-  const calculateTotal = (items) => {
-    const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
-    setTotalAmount(total);
-  };
-
-  const handleQuantityChange = (itemId, delta) => {
-    const updatedItems = cartItems.map((item) =>
-      item.id === itemId ? { ...item, quantity: item.quantity + delta } : item
+    return (
+        <div className='Home-buy'>
+            <div className='Home-buy1'>
+                <Header />
+                <div className='Buy-nav'>
+                    <div className='Buy1-form1'>
+                        <p style={{ paddingTop: '30px', marginLeft: '25px', fontWeight: 'bold' }}>Phương Thức Vận Chuyển</p>
+                        <div className='Buy1-form1-nav1'>
+                            <div className={`Buy1-form1-nav2 ${selectedMethod === 'shop' ? 'selected' : ''}`}onClick={() => handleMethodSelect('shop')} >
+                                <img src={NhanHangTaiShop} alt="NhanHangTaiShop" /><br />
+                                <a style={{ fontSize: '15px' }}>Miễn cước <br /><a style={{ fontSize: '14px' }}> Miễn cước hoá đơn  <br />trên 5.000.000₫</a></a>
+                            </div>
+                            <div
+                                className={`Buy1-form1-nav3 ${selectedMethod === 'home' ? 'selected' : ''}`}
+                                onClick={() => handleMethodSelect('home')}
+                            >
+                                <img style={{ marginRight: '40px' }} src={GiaoHangTaiNha} alt="GiaoHangTaiNha" /><br />
+                                <a style={{ fontSize: '15px', marginLeft: '40px' }}>Miễn cước <br /><a style={{ fontSize: '14px', marginLeft: '15px' }}> Miễn cước hoá đơn <br /> <a style={{ marginLeft: '25px' }}>trên 5.000.000₫</a> </a></a>
+                            </div>
+                        </div><br />
+                        <div className='Buy-TT'>
+                            <div style={{ paddingTop: '5px', paddingBottom: '5px', width: '80%', backgroundColor: '#f8f8f8', marginLeft: '40px', border: '2px solid #ececec' }}>
+                                <a style={{ marginLeft: '10px' }}>  Áp dụng cho KH đặt giữ hàng tại ShowRoom:</a>
+                            </div>
+                            <p style={{ paddingTop: '30px', marginLeft: '25px', fontWeight: 'bold' }}>Phương Thức Thanh Toán</p>
+                            <div>
+                                <img style={{ marginLeft: '50px' }} src={BankMoney} alt="ChuyenKhoan" />
+                                <img style={{ width: '130px', height: '50px', border: '2px solid #ececec', marginLeft: '100px' }} src={MoneyHome} alt="MoneyHome" />
+                            </div><br />
+                            <div style={{ paddingTop: '5px', paddingBottom: '5px', width: '80%', backgroundColor: '#f8f8f8', marginLeft: '40px', border: '2px solid #ececec' }}>
+                                <a style={{ marginLeft: '10px' }}>Ngân hàng BIDV </a><br />
+                                <a style={{ marginLeft: '10px' }}>Số TK : 2131187208 </a><br />
+                                <a style={{ marginLeft: '10px' }}>Chủ TK : LE TRI LINH </a><br />
+                                <a style={{ marginLeft: '10px' }}>Xem thêm các số tài khoản ngân hàng khác, xin mời xem <a style={{ color: 'red' }}>tại đây</a></a>
+                                <img style={{ width: '200px', height: '300px', marginLeft: '10px' }} src={QRBANK} alt="QRBANK" />
+                            </div><br />
+                            <div>
+                                <a style={{ marginLeft: '20px', fontSize: '18px', fontWeight: 'bold' }}>  Bạn có yêu cầu khác ?</a><br /><br />
+                                <textarea style={{ marginLeft: '40px', width: '490px' }} id="description" name="description" />
+                            </div><br />
+                            <div style={{ paddingTop: '10px', paddingBottom: '10px', width: '80%', backgroundColor: '#f8f8f8', marginLeft: '40px', border: '2px solid #ececec' }}>
+                            </div><br />
+                        </div>
+                    </div>
+                    <div className='Buy1-form2'>
+                        <div className="cart-container">
+                            {error && <div className="error-message">{error}</div>}
+                            {cartItems.length === 0 ? (
+                                <p style={{ textAlign: 'center' }}>Giỏ hàng của bạn đang trống.</p>
+                            ) : (
+                                <div>
+                                    <ul className="cart-items">
+                                        {cartItems.map((item) => (
+                                            <li key={item.id} className="cart-item">
+                                                <div className='navH-cart'>
+                                                    <div className='nav-left'>
+                                                        <a
+                                                            style={{ borderRadius: '50px', color: 'black', position: 'absolute', marginLeft: '15px', marginTop: '-8px', backgroundColor: '#f4f4f4', width: '25px', height: '25px', textAlign: 'center', textDecoration: 'none' }}
+                                                            onClick={() => removeItemFromCart(item.id)}
+                                                            className="remove-button"
+                                                        >
+                                                            X
+                                                        </a>
+                                                        <img
+                                                            src={`http://localhost:8090/Image/${item.product.image}`}
+                                                            style={{ width: '100px', height: '100px', marginLeft: '20px' }}
+                                                            alt={item.product.name}
+                                                            className="cart-item-image"
+                                                        />
+                                                        <a
+                                                            style={{ width: 'fit-content', display: 'inline-block', position: 'relative', top: '-40px' }}
+                                                        >
+                                                            {item.product.name}
+                                                        </a>
+                                                    </div>
+                                                    <div className='nav-right'>
+                                                        <br />
+                                                        <a style={{ paddingTop: '15px', marginRight: '50px' }}>
+                                                            {item.product.price.toLocaleString()}₫ X <a >{item.quantity}</a>
+                                                        </a>
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <hr className="custom-hr3" />
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                        <div>
+                            <span style={{ fontWeight: 'bold', fontSize: '15px', marginLeft: '20px' }}> Thông tin đơn hàng </span><br />
+                            <a style={{ marginLeft: '30px', color: 'black' }}>{formData.name}</a><br />
+                            <a style={{ marginLeft: '30px', color: 'black' }}>{formData.phone_number}</a><br />
+                            <a style={{ marginLeft: '30px', color: 'black' }}>{formData.email}</a><br />
+                            <a style={{ marginLeft: '30px', color: 'black' }}>{formData.address}</a><br />
+                            <a style={{ marginLeft: '30px', color: 'black' }}>{formData.time}</a><br />
+                            <span style={{ fontWeight: 'bold', fontSize: '15px', marginLeft: '20px' }}> Tổng Tiền </span><br />
+                            <a style={{ marginLeft: '30px', color: 'red', fontSize: '30px' }}> {totalAmount.toLocaleString()}₫</a>
+                            <button className='datmua'>Đặt Mua</button>
+                        </div>
+                    </div>
+                </div>
+                <Footer />
+            </div>
+        </div>
     );
-    setCartItems(updatedItems);
-    calculateTotal(updatedItems);
-  };
-
-  if (!user) {
-    return <p>Bạn cần đăng nhập để xem giỏ hàng.</p>;
-  }
-
-
- 
-
-
-
-  // const [formData, setFormData] = useState({
-  //   recipient: '',
-  //   phone: '',
-  //   email: '',
-  //   region: 'VIETNAM',
-  //   province: '',
-  //   district: '',
-  //   address: '',
-  //   deliveryTime: ''
-  // });
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData(prevState => ({
-  //     ...prevState,
-  //     [name]: value,
-  //     ...(name === 'region' && { province: '', district: '' }), 
-  //     ...(name === 'province' && { district: '' })
-  //   }));
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log('Form Data Submitted: ', formData);
-   
-  // };
-
-  // const renderProvinces = () => {
-  //   return Object.keys(data[formData.region].provinces).map((province) => (
-  //     <option key={province} value={province}>{province}</option>
-  //   ));
-  // };
-
-  // const renderDistricts = () => {
-  //   const districts = data[formData.region].provinces[formData.province] || [];
-  //   return districts.map((district) => (
-  //     <option key={district} value={district}>{district}</option>
-  //   ));
-  // };
- 
-  return (
-    <div className='form-con'>
-      <Header />
-      <div className='form-top'>
-        <div className='form-top1'>
-          <Link to="/" style={{ marginLeft: '270px', color: 'rgb(0, 132, 255)' }}>Mua thêm sản phẩm khác</Link>
-          <span style={{ marginLeft: '500px' }}>Giỏ hàng của bạn</span>
-        </div>
-        <div className='form-nav'>
-          <div className='form-header'>
-            <div className='LIST-CART'></div>
-            <div className="cart-container">
-       
-
-          {/* hiển thị sản phẩm trong giỏ hàng Ở ĐÂY */}
-          {error && <div className="error-message">{error}</div>}
-      {cartItems.length === 0 ? (
-        <p>Giỏ hàng của bạn đang trống.</p>
-      ) : (
-        <div>
-          <ul className="cart-items">
-            {cartItems.map((item) => (
-              <li key={item.id} className="cart-item">
-                <div className='navH-cart'>
-                  <div className='nav-left'>
-                  
-  <button style={{position:'absolute',borderRadius:'5px',width:'10px',height:'10px',backgroundColor:'white',color:'black' }} onclick="removeImage()"><a>X</a></button>
-  <img src={`http://localhost:8090/Image/${item.product.image}`} style={{width:'100px',height:'100px'}} alt={item.product.name} className="cart-item-image" />
-
-                <a>{item.product.name}</a>
-               
-                  </div>
-                <div  className='nav-rigth'>
-                < a style={{marginLeft:'220px',paddingTop:'20px'}}>Giá: {item.product.price.toLocaleString()} ₫</a>
-                 <br/>
-                 <div  style={{marginLeft:'220px'}}>
-                 <button onClick={() => handleQuantityChange(item.id, -1)} disabled={item.quantity <= 1}>-</button>
-                 <span>{item.quantity}</span>
-                 <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
-                 </div>
-                </div>
-                </div>
-                
-                <hr className="custom-hr3" />
-              
-              </li>
-            ))}
-          </ul>
-          
-        </div>
-      )}
-          
-       
-      </div>
-          </div>
-          
-          <div>
-            <span style={{ color: 'red', fontWeight: 'bold', fontSize: '18px', marginLeft: '60%' }}>Tổng số tiền :{totalAmount.toLocaleString()}₫</span>
-          </div>
-          <hr className="custom-hr1" />
-          <div className='formButton'>
-            <button>Cập nhật giỏ hàng</button>
-          </div>
-          <hr className="custom-hr1" /><br/>
-        <div className='from-home'>
-          <form >
-            <div >
-              <label>Người nhận hàng:</label>
-              <input style={{marginLeft:'100px',width:'500px',padding:'10px',height:'35px'}}
-                type="text"
-                name="recipient"
-              
-              />
-            </div><br/>
-            <div>
-              <label>Số điện thoại:</label>
-              <input style={{marginLeft:'130px',width:'500px',padding:'10px',height:'35px'}}
-                type="text"
-                name="phone"
-                
-              />
-            </div><br/>
-            <div>
-              <label>Email:</label>
-              <input style={{marginLeft:'185px',width:'500px',padding:'10px',height:'35px'}}
-                type="email"
-                name="email"
-                // value={formData.email}
-                // onChange={handleChange}
-              />
-            </div><br/>
-            <div>
-              <label>Khu vực phân phối:</label>
-              <select   style={{marginLeft:'90px',width:'110px',height:'35px'}}
-                name="region"
-                // value={formData.region}
-                // onChange={handleChange}
-              >
-                <option value="VIETNAM"> VIỆT NAM</option>
-                <option value="JAPAN">NHẬT BẢN</option>
-              </select>
-          
-              
-              <select  style={{marginLeft:'10px',width:'190px',height:'35px'}}
-                name="province"
-                // value={formData.province}
-                // onChange={handleChange}
-              >
-                <option value="">Chọn tỉnh/thành phố</option>
-                {/* {renderProvinces()} */}
-              </select>
-        
-            
-              <select  style={{marginLeft:'10px',width:'170px',height:'35px'}}
-                name="district"
-                // value={formData.district}
-                // onChange={handleChange}
-              >
-                <option value="">Chọn quận/huyện</option>
-                {/* {renderDistricts()} */}
-              </select>
-            </div><br/>
-            <div>
-              <label>Địa chỉ:</label>
-              <input style={{marginLeft:'178px',width:'500px',padding:'10px',height:'35px'}}
-                type="text"
-                name="address"
-                // value={formData.address}
-                // onChange={handleChange}
-              />
-            </div><br/>
-            <div>
-              <label>Thời gian giao hàng:</label>
-              <input  style={{marginLeft:'85px',width:'500px',padding:'10px',height:'35px'}}
-                type="text"
-                name="deliveryTime"
-              //   value={formData.deliveryTime}
-              //   onChange={handleChange}
-              />
-            </div><br/>
-            <hr className="custom-hr1" />
-            <button style={{marginTop:'10px',marginBottom:'50px',marginLeft:'40%'}} type="submit">Xác nhận </button>
-          </form>
-          </div>
-        </div>
-       <div className='form-footer'>
-<a>Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của LILY JEWELERY.COM</a>
-       </div>
-      </div>
-      <Footer />
-    </div>
-  );
 };
 
-export default Cart;
+export default Buy;

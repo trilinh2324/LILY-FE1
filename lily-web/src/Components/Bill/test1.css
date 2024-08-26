@@ -1,0 +1,113 @@
+.Home-buy {
+    width: 100%;
+}
+
+.Home-buy1 {
+    background-color: #ececec;
+    width: 100%;
+    height: auto;
+    padding-top: 4%;
+}
+
+.Buy-nav {
+    width: 90%;
+    height: auto;
+    background-color: white;
+    margin: auto;
+    display: flex;
+}
+
+.Buy-footer {
+    text-align: center;
+    padding-bottom: 40px;
+    padding-top: 15px;
+    font-size: 14px;
+}
+
+.Buy1-form1 {
+    flex: 1;
+    background-color: white;
+}
+
+.Buy1-form2 {
+    padding-top: 20px;
+    flex: 1;
+  background-color: white;
+  margin-right: 10px;
+}
+.Buy1-form2-top{
+    border: 1px solid #ffedad;
+    background-color: #fef9e6;
+    margin-bottom: 20px;
+}
+.Buy1-form1-nav1 {
+    display: flex;
+    width: auto;
+    height: auto;
+}
+
+.Buy1-form1-nav2 {
+    flex: 1;
+    text-align: center;
+    padding-right: 80px;
+    padding-left: 20px;
+}
+
+.Buy1-form1-nav3 {
+    flex: 1;
+
+    padding-right: 100px;
+}
+
+.buy-color1.selected img,
+.buy-color2.selected img {
+    border: 2px solid #ff5303;
+    border-radius: 5px;
+}
+
+input[type="radio"] {
+    width: 15px;
+    height: 15px;
+}
+
+/* Đổi màu khi nút radio được chọn */
+input[type="radio"]:checked {
+    accent-color: red;
+}
+
+.custom-hr3 {
+    border: none;
+    border-top: 1px solid #a09d9d;
+    width: 95%;
+    margin-left: 10px;
+
+}
+
+.Buy-Left {
+   
+    margin-top: 20px;
+    padding-top: 5px;
+   
+}
+
+.left-buy1 {
+    
+    padding-Top: 5px;
+    padding-Bottom: 5px;
+    width: 95%;
+    background-Color:white;
+    margin-Left: 15px;
+    border: 1px solid #a5a4a4;
+    
+}
+.from-adress{
+    padding-top: 15px;
+    margin-left:30px;
+    color: #6d6b6b;
+    font-size: 14px;
+}
+.dashed-line {
+    border-bottom: 1px dashed #4e4d4d; /* Đường gạch nét đứt ở dưới, màu đen, dày 2px */
+    width: 95%;
+    margin-left: 15px;
+}

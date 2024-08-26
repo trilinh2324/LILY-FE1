@@ -82,3 +82,32 @@
     z-index: 999; /* Đảm bảo ảnh và nút "x" nằm trên tất cả các nội dung khác */
  
  }
+
+
+ <div className="form-group">
+ <label htmlFor="country">Quốc gia:</label>
+ <select id="country" value={selectedCountry} onChange={handleCountryChange}>
+   <option value="VIETNAM">Việt Nam</option>
+   <option value="JAPAN">Nhật Bản</option>
+ </select>
+</div>
+
+<div className="form-group">
+ <label htmlFor="province">Tỉnh/Thành phố:</label>
+ <select id="province" value={selectedProvince} onChange={handleProvinceChange} disabled={!selectedCountry}>
+   <option value="">Chọn tỉnh/thành phố</option>
+   {provinces[selectedCountry].map(province => (
+     <option key={province.name} value={province.name}>{province.name}</option>
+   ))}
+ </select>
+</div>
+
+<div className="form-group">
+ <label htmlFor="district">Quận/Huyện:</label>
+ <select id="district" disabled={!selectedProvince}>
+   <option value="">Chọn quận/huyện</option>
+   {districts.map(district => (
+     <option key={district} value={district}>{district}</option>
+   ))}
+ </select>
+</div>

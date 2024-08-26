@@ -59,6 +59,7 @@ const ProductDetail = () => {
         });
       } else if (response.includes('Số lượng đã được cập nhật trong giỏ hàng')) {
         toast.success('Số lượng đã được cập nhật trong giỏ hàng', {
+          onClose: () => navigate('/cart'), 
           autoClose: 1000,
         });
       } else {
